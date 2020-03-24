@@ -11,6 +11,14 @@ exports.resolve = {
   alias: {
     src: PATH_SRC,
     components: `${PATH_SRC}/components`,
+    pages: `${PATH_SRC}/pages`,
+    routes: `${PATH_SRC}/routes`,
+    api: `${PATH_SRC}/api`,
+    utils: `${PATH_SRC}/utils`,
+    structs: `${PATH_SRC}/structs`,
+    types: `${PATH_SRC}/types`,
+    entities: `${PATH_SRC}/types/entities`,
+    interfaces: `${PATH_SRC}/types/interfaces`,
   },
 };
 

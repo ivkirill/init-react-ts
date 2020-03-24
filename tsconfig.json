@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
+    "strictPropertyInitialization": false,
     "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
     "noUnusedParameters": true,
     "noImplicitReturns": true,
@@ -15,8 +17,24 @@
     "baseUrl": "./src",
     "paths": {
       "src/*": ["*"],
+      "api": ["api"],
+      "api/*": ["api/*"],
+      "utils": ["utils"],
+      "utils/*": ["utils/*"],
       "components": ["components"],
-      "components/*": ["components/*"]
+      "components/*": ["components/*"],
+      "pages": ["pages"],
+      "pages/*": ["pages/*"],
+      "routes": ["routes"],
+      "routes/*": ["routes/*"],
+      "types": ["types"],
+      "types/*": ["types/*"],
+      "entities": ["types/entities"],
+      "entities/*": ["types/entities/*"],
+      "structs": ["structs"],
+      "structs/*": ["structs/*"],
+      "interfaces": ["types/interfaces"],
+      "interfaces/*": ["types/interfaces/*"]
     }
   },
   "include": [
