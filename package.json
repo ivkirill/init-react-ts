@@ -47,7 +47,7 @@
     "react-dom": "^16.13.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --config ./configs/webpack.dev.js --progress --colors --hot --open --mode=development",
+    "start": "webpack-dev-server --config ./configs/webpack.dev.js --progress --colors --hot --mode=development",
     "build": "webpack --hide-modules --config ./configs/webpack.prod.js"
   }
 }
