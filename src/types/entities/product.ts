@@ -1,14 +1,13 @@
-import PropTypes from 'prop-types';
-import { Dictionary } from 'interfaces';
+import PropTypes, {  } from 'prop-types';
+import { StructPropTypes } from 'interfaces';
 import { BaseStruct } from 'structs';
 
 export class Product extends BaseStruct {
   id: number;
-  displayNamename: string;
+  model: 'Product';
+  displayName: string;
 
-  protected static __class: string = 'Product';
-
-  static propTypes: Dictionary = {
+  static propTypes: StructPropTypes = {
     id: PropTypes.number,
     displayName: PropTypes.string,
   };

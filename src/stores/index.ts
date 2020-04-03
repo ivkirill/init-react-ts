@@ -10,8 +10,7 @@ const stores = {
 
   products: new EntityStore({
     api: api.products,
-    itemStruct: Product,
-    listStruct: Product,
+    entity: Product,
   }),
 };
 

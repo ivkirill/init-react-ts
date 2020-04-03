@@ -1,5 +1,7 @@
-import CRUD from './crud';
-export { CRUD };
+import API from './api';
+import request from './request';
 
-export const products = new CRUD('/products');
-export const payment = new CRUD('/payment');
+export { API, request };
+
+export const products = new API('/products');
+export const payment = new API('/payment');

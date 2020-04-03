@@ -6,7 +6,7 @@ declare module '*.scss' {
 
 // Typescript fix import for prop-types ReactPropTypesSecret
 declare module 'prop-types/lib/ReactPropTypesSecret' {
-  export const secret: string;
+  export const PropTypesSecret: string;
 }
 
 // Typescript fix flat, flatMap

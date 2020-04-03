@@ -1,14 +1,24 @@
-import { Dictionary, ModelProps } from '.';
+import request, { AxiosRequestConfig, AxiosResponse, AxiosError, CancelTokenSource } from 'axios';
+import { Dictionary } from 'interfaces';
 
-export {
-  AxiosResponse as APIResponse,
-  AxiosRequestConfig as APIRequestConfig,
-  AxiosError as APIError,
-} from 'axios';
+export type APIResponse = AxiosResponse;
+export type APIRequestConfig = AxiosRequestConfig;
+export type APIError = AxiosError;
+export type APICancelTokenSource = CancelTokenSource;
 
-export interface APIRequestPromise extends Promise<any>{}
+export const APICancelToken = request.CancelToken;
+export const isCancelError = request.isCancel;
+
+export interface APIRequestPromise<T = Dictionary> extends Promise<T> {}
 
 export type APIMethod = 'get' | 'delete' | 'post' | 'put' | 'patch';
+
+export interface APIRequestParams {
+  method: APIMethod,
+  url?: string,
+  data?: Dictionary,
+  config?: APIRequestConfig,
+}
 
 export interface APIQueryParams extends Dictionary {
   query?: string;
@@ -17,20 +27,20 @@ export interface APIQueryParams extends Dictionary {
   page?: number;
 }
 
+export interface APIQueryListParams extends APIQueryParams {
+  listName?: string,
+}
+
 export interface APIResponseMeta {
   count: number;
   limit: number;
-  query_params: APIQueryParams;
+  params: APIQueryParams;
   next: number | null;
   previous: string | null;
   url: string | null;
 }
 
-export interface APIResponseModel extends ModelProps {
-  model: string;
-}
-
-export interface APIResponseList {
+export interface APIResponseList<T> {
   meta: APIResponseMeta;
-  objects: APIResponseModel[];
+  objects: T[];
 }

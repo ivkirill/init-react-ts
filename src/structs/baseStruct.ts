@@ -1,75 +1,73 @@
-import ReactPropTypesSecret from 'prop-types/lib/ReactPropTypesSecret';
-import { Dictionary, ModelProps, BaseStructClass } from 'interfaces';
+import { PropTypesSecret } from 'prop-types/lib/ReactPropTypesSecret';
+import { Dictionary, StructPropTypes } from 'interfaces';
 
 export default class BaseStruct {
-  /**
-   * Name of current class.
-   * IMPORTANT: must be re-defined in extended classes, due to lack of Reflection API in JS
-   */
-  protected static __class: string = 'BaseStruct';
-  static propTypes: Dictionary = {};
-  static objectTypes: Dictionary = {};
+  static propTypes: StructPropTypes = {};
+  static objectTypes: Dictionary<typeof BaseStruct> = {};
 
   /**
    * Returns struct instance within specified props.
    * By default creates new instance, but can be overwritten
    *
-   * @param {ModelProps} props. Props to create struct with
-   * @returns {BaseStruct}
+   * @param {Dictionary} props. Props to create struct with
+   * @returns {T}
    */
-  static getInstance<T extends BaseStruct>(props: ModelProps): T {
+  static getInstance<T extends BaseStruct>(this: { new(): T } & typeof BaseStruct, props: T ): T | Dictionary {
     return this.createInstance(props);
   }
 
-  /**
+   /**
    * Creates an array of instances
    *
-   * @param {ModelProps[]} propsArray. An array of props to create each instance
-   * @returns {BaseStruct[]}
+   * @param {Dictionary[]} propsArray. An array of props to create each instance
+   * @returns {T[]}
    */
-  static getInstanceMap<T extends BaseStruct>(propsArray: ModelProps[]): T[] {
+  static getInstanceMap(propsArray: Dictionary[]): BaseStruct[] {
     return propsArray.map(props => this.getInstance(props));
   }
 
-  /**
+  /*
    * Creates struct new instance, with props types validation
    *
    * @static
-   * @param {ModelProps} props. Props to create struct with
+   * @param {APIResponseModel} props. Props to create struct with
    * @returns {BaseStruct}
    */
-  static createInstance<T extends BaseStruct>(props: ModelProps): T {
+  static createInstance<T extends BaseStruct>(this: { new(): T } & typeof BaseStruct, props: T): T {
     // Create new instance of struct, after that assign each property to that instance.
     // Assigning can not be done in class constructor's, since when super constructor is being
     // executed, no derived properties are accessible yet
-    const instance: Dictionary = new this();
+    const instance = new this();
 
     // Getting default props for prop validation.
     // Instead of defining another static defaultProps property - find all instance's properties,
     // that have names, specified in propTypes - if that prop contains value - it's default value.
-    const defaultProps: Dictionary = {};
-    Object.getOwnPropertyNames(instance).forEach((propName) => {
+    const defaultProps: Dictionary<string> = {};
+    const instanceValues = Object.create(instance);
+
+    Object.getOwnPropertyNames(instance).forEach(propName => {
       if (this.propTypes[propName] !== undefined) {
-        defaultProps[propName] = instance[propName];
+        defaultProps[propName] = instanceValues[propName];
       }
     });
 
-    const error: Error | null = this.checkPropTypes({ ...defaultProps, ...props });
+    // checkPropUnion function is commented because there are some unions,
+    // like Company_relation that is not required. For this reason checkPropUnion
+    // on validating company in runtime fails.
+    // || this.checkPropUnion(props);
+    const error: Error | null = this.checkPropTypes({ ...defaultProps, ...props }) || null;
 
     if (error !== null) {
       throw error;
     }
 
     Object.keys(props).map((propName: string) => {
-      if (this.propTypes[propName] === undefined) {
-        // TODO: use external logger
-        console.warn(`${this.__class} does not have property ${propName}`);
+      if (this.propTypes[propName] !== undefined) {
+        Object.defineProperty(instance, propName, this.getPropertyValue(props, propName));
       }
-
-      instance[propName] = this.getPropertyValue(props, propName);
     });
 
-    return <T>instance;
+    return instance;
   }
 
   /**
@@ -78,10 +76,10 @@ export default class BaseStruct {
    * ( PropTypes.checkPropTypes(this.propTypes, props, 'prop') )
    *
    * @static
-   * @param {ModelProps} props. Props to validate
+   * @param {APIResponseModel} props. Props to validate
    * @returns {(Error | null)}
    */
-  static checkPropTypes(props: ModelProps): Error | null {
+  static checkPropTypes(props: Dictionary<string>): Error | null {
     for (const propName in this.propTypes) {
       if (!this.propTypes.hasOwnProperty(propName)) {
         continue;
@@ -90,10 +88,10 @@ export default class BaseStruct {
       const error: Error | null = this.propTypes[propName](
         props,
         propName,
-        this.__class,
+        this.name,
         'prop',
-        null,
-        ReactPropTypesSecret, // Without this argument, function will not allow to call itself
+        propName,
+        PropTypesSecret, // Without this argument, function will not allow to call itself
       );
 
       if (error !== null) {
@@ -108,18 +106,21 @@ export default class BaseStruct {
    * Returns value for specified propName, received from props,
    * considering _objectTypes
    *
-   * @param {ModelProps} props Props dictionary, to get value from
+   * @param {Dictionary} props Props dictionary, to get value from
    * @param {string} propName Prop's name, to get value of
    */
-  static getPropertyValue(props: ModelProps, propName: string): any {
-    const StructClass: undefined | BaseStructClass = this.objectTypes[propName];
+  static getPropertyValue(props: Dictionary, propName: string): any {
+    /*
+      Find linked class for value property, if its exists, create instance of class using props
+    */
+    const Struct = this.objectTypes[propName];
 
-    if (props[propName] != null && StructClass != null) {
+    if (props[propName] != null && Struct != null) {
       if (Array.isArray(props[propName])) {
-        return StructClass.getInstanceMap(props[propName]);
+        return Struct.getInstanceMap(props[propName]);
       }
 
-      return StructClass.getInstance(props[propName]);
+      return Struct.getInstance(props[propName]);
     }
 
     return props[propName];

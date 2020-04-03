@@ -1,36 +1,49 @@
-import { BaseModelClass, ModelId } from 'interfaces';
-import BaseModel from './baseModel';
+import { BaseModelClass, Dictionary } from 'interfaces';
+import { BaseModel } from 'structs';
 
 /**
  * Model Objects Heap.
  * Is intended to avoid model objects duplicates in memory
  */
 export class Heap {
+  instance: Heap;
+  exists: boolean;
+
+  constructor() {
+    if (this.exists) {
+      return this.instance;
+    }
+
+    this.instance = this;
+    this.exists = true;
+  }
+
   /**
    * Storage object, where all models are kept
    *
    * @private
-   * @type {BaseStructClass<Map<ModelId, BaseModel>>}
+   * @type {BaseStructClass<Map<number, BaseModel>>}
    */
-  private storage: Map<BaseModelClass, Map<ModelId, BaseModel>> = new Map();
+  private storage: Map<BaseModelClass, Map<number, BaseModel>> = new Map();
 
   /**
    * Using specified attributes, tries to find existing model in storage,
    * if non found - creates and saves in storage.
    *
-   * @param {any} attributes. Model's, to find, attributes. Technically could be anything
-   * @param {string} key. Cache key
+   * @param {Dictionary} attributes. Model's, to find, attributes.
    * @returns {BaseModel | null}
    */
-  findOrCreateModel(attributes: any, ModelClass: BaseModelClass, key: string): BaseModel | any {
-    let model: BaseModel | null = this.findStorageModel(attributes, ModelClass, key);
+  findModel(attributes: Dictionary, ModelClass: BaseModelClass): BaseModel | Dictionary {
+    let model: BaseModel | null = this.getModel(attributes, ModelClass);
 
     if (model !== null) {
+      this.updateModel(model, attributes, ModelClass);
+
       return model;
     }
 
     // Try to create model from specified attributes - if not succeeded return specified attributes
-    model = this.createModel(attributes, ModelClass, key);
+    model = this.createModel(attributes, ModelClass);
 
     if (model !== null) {
       return model;
@@ -39,11 +52,11 @@ export class Heap {
     return attributes;
   }
 
-  findOrCreateAll(objects: any[], ModelClass: BaseModelClass, key: string): (BaseModel | any)[] {
-    const list: (BaseModel | any)[] = [];
+  findAll(objects: Dictionary[], ModelClass: BaseModelClass): (BaseModel | Dictionary)[] {
+    const list: (BaseModel | Dictionary)[] = [];
 
     for (const attributes of objects) {
-      const model = this.findOrCreateModel(attributes, ModelClass, key);
+      const model = this.findModel(attributes, ModelClass);
 
       list.push(model);
     }
@@ -54,21 +67,20 @@ export class Heap {
   /**
    * Creates model from specified attributes. If succeeded - add model to storage, otherwise return null
    *
-   * @param {any} attributes. Attributes of model to create
-   * @param {string} key. Cache key
+   * @param {Dictionary} attributes. Attributes of model to create
    * @returns {(BaseModel | null)}
    */
-  createModel(attributes: any, ModelClass: BaseModelClass, key: string): BaseModel | null {
-    const model = this.createModelInstance(attributes, ModelClass);
+  createModel(attributes: Dictionary, ModelClass: BaseModelClass): BaseModel | null {
+    const model = this.getInstance(attributes, ModelClass);
 
     if (model != null) {
-      return this.addStorageModel(model, ModelClass, key);
+      return this.addModel(model, ModelClass);
     }
 
     return null;
   }
 
-  findStorageModel(attributes: any, ModelClass: BaseModelClass, key: string = ''): BaseModel | null {
+  getModel(attributes: Dictionary, ModelClass: BaseModelClass): BaseModel | null {
     if (attributes == null || attributes.id == null) {
       return null;
     }
@@ -80,40 +92,40 @@ export class Heap {
       return null;
     }
 
-    const uid = (key) ? `${id}${key}` : id;
-    return storageOfClass.get(uid) || null;
+    return storageOfClass.get(id) || null;
   }
 
-  addStorageModel(model: BaseModel, ModelClass: BaseModelClass, key: string = ''): BaseModel {
+  addModel(model: BaseModel, ModelClass: BaseModelClass): BaseModel {
+    const { id } = model;
+
     if (!this.storage.has(ModelClass)) {
       this.storage.set(ModelClass, new Map());
     }
 
-    const { id } = model;
-
     if (id != null) {
-      const uid = (key) ? `${id}${key}` : id;
-      this.storage.get(ModelClass)!.set(uid, model);
+      this.storage.get(ModelClass)!.set(id as any, model);
     }
 
     return model;
   }
 
-  updateStorageModel(model: BaseModel, attributes: any, ModelClass: BaseModelClass): BaseModel {
-    const updateModel = this.createModelInstance(attributes, ModelClass);
+  updateModel(model: BaseModel, attributes: Dictionary, ModelClass: BaseModelClass): BaseModel {
+    const update = this.getInstance(attributes, ModelClass);
 
-    if (updateModel == null) {
+    if (update == null) {
       return model;
     }
 
-    // Can't just replace model object, since all values, that have link to the updated model,
-    // will never get new updated model, they still will be pointing to the old object, which was replaced
-    Object.assign(model, updateModel);
+    if (Number(model.updated) < Number(update.updated)) {
+      // Can't just replace model object, since all values, that have link to the updated model,
+      // will never get new updated model, they still will be pointing to the old object, which was replaced
+      Object.assign(model, update);
+    }
 
     return model;
   }
 
-  createModelInstance(attributes: any, ModelClass: BaseModelClass): BaseModel | null {
+  getInstance(attributes: Dictionary, ModelClass: BaseModelClass): BaseModel | null {
     if (attributes == null) {
       return null;
     }

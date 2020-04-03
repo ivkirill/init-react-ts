@@ -1,94 +1,118 @@
 import { observable } from 'mobx';
-import { BaseStruct } from 'structs';
-import { APIResponseList, APIQueryParams, BaseStructClass, APIResponseModel, Dictionary, ModelId } from 'interfaces';
-import { CRUD } from 'api';
+import {
+  APIResponseMeta,
+  APIQueryParams,
+  APIQueryListParams,
+  ModelId,
+  Dictionary,
+  BaseModelClass,
+} from 'interfaces';
+
+import { API } from 'api';
 
 // structs for item and list may be diffrent
 interface Props {
-  api: CRUD;
-  itemStruct: BaseStructClass | null;
-  listStruct: BaseStructClass | null;
+  api: API;
+  entity: BaseModelClass;
 }
 
-export default class EntityStore<T> {
-  api: CRUD;
-  itemStruct: BaseStructClass | null;
-  listStruct: BaseStructClass | null;
+export default class EntityStore<T extends BaseModelClass> {
+  api: API;
+  entity:  BaseModelClass;
 
-  constructor (data: Props) {
-    const { api, itemStruct, listStruct } = data;
+  constructor (props: Props) {
+    const { api, entity } = props;
 
     this.api = api;
-    this.itemStruct = itemStruct;
-    this.listStruct = listStruct;
+    this.entity = entity;
   }
-
-  // TODO: move it into `Pending` store as standalone varable for each Entity
-  @observable fetching: boolean = false;
-
-  /**
-   * Fetched records list object.
-   * Contains meta information about request pagination and an array of objects
-   *
-   * @type {APIResponseList}
-   */
-  @observable list: APIResponseList = {
-    // TODO: move it to contants
-    meta: { count: 0, limit: 100, query_params: {}, next: 1, previous: null, url: null },
-    objects: [],
-  };
 
   /**
    * Single fetched record.
    * Is useful when it's required to fetch only one record, without accessing a list of records
    * (searching fetched record in list).
-   * TODO:  make it link to an object from list if structs the same
-   *
-   * @type {BaseStruct}
    */
   @observable item: T;
 
-  async fetchList(params: APIQueryParams = {}): Promise<Dictionary> {
-    if (this.listStruct === null) {
-      throw Error(`Current store has no API method for fetch LIST '${this.api.pathname}'`);
-    }
+  /**
+   * Fetched observable items
+   *
+   * @type {Dictionary<T>}
+   * @memberof EntityStore
+   */
+  @observable items: Dictionary<T> = {};
+
+  /**
+   * Store for named arrays of fetched item ids
+   *
+   * @type {Dictionary<Array<ModelId>>}
+   * @memberof EntityStore
+   */
+  @observable lists: Dictionary<Array<ModelId>> = {};
+
+    /**
+   * Fetched records metas object.
+   * Contains meta information about request pagination
+   *
+   * @type {Dictionary<APIResponseMeta>}
+   */
+  @observable metas: Dictionary<APIResponseMeta> = {};
+
+  @observable fetching: boolean = false;
+
+  async fetchList(params: APIQueryListParams): Promise<Dictionary<T>> {
+    const { listName = 'all' } = params;
 
     this.fetching = true;
 
-    // TODO: use key as external prop, store varable in `listNames` store
+    const response = await this.api.list(params);
+    const { meta, objects } = response;
 
-    const response: APIResponseList = await this.api.list(params);
-    const list = this.listStruct.getInstanceMap(response.objects) as APIResponseModel[];
+    const list: Array<ModelId> = [];
 
-    this.list = {
-      meta: response.meta,
-      objects: list,
-    };
+    this.items = objects.reduce((items: Dictionary<T>, responseItem: T) => {
+      const item = this.entity.getInstance(responseItem);
+      const { id } = item;
+
+      if (id) {
+        list.push(id);
+
+        return { ...items, ...{ [id]: item } }
+      }
+
+      return items;
+    }, this.items);
+
+    this.lists[listName] = list;
+    this.metas[listName] = meta;
 
     this.fetching = false;
 
-    return this.list;
+    return this.items;
   }
 
-  async fetchItem(id: ModelId): Promise<BaseStruct> {
-    if (this.itemStruct === null) {
-      throw Error(`Current store has no API method for fetch ONE '${this.api.pathname}'`);
-    }
-
+  async fetchItem(id: ModelId): Promise<T> {
     this.fetching = true;
-    this.item = <T>this.itemStruct.getInstance(await this.api.get(id));
+
+    const item = <T>this.entity.getInstance(await this.api.get(id));
+
+    this.items[id] = item;
+    this.item = this.items[id];
+
     this.fetching = false;
 
     return this.item;
   }
 
-  async update(id: ModelId, params: APIQueryParams = {}): Promise<BaseStruct> {
-    if (this.itemStruct === null) {
-      throw Error(`Current store has no API method for fetch UPDATE '${this.api.pathname}'`);
-    }
+  async update(id: ModelId, params: APIQueryParams = {}): Promise<T> {
 
     this.fetching = true;
-    this.item = <T>this.itemStruct.getInstance(await this.api.patch(id, params));
+
+    const item = <T>this.entity.getInstance(await this.api.patch(id, params));
+
+    this.items[id] = item;
+    this.item = this.items[id];
+
     this.fetching = false;
 
     return this.item;

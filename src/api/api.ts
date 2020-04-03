@@ -1,26 +1,26 @@
 import { APIRequestPromise, APIQueryParams, Dictionary, ModelId } from 'interfaces';
-import { api } from 'utils';
+import { request } from 'api';
 
-export default class CRUD {
+export default class API {
   constructor(readonly pathname: string) {}
 
   list(params: APIQueryParams): APIRequestPromise {
-    return api.getList(this.pathname, params);
+    return request.list(this.pathname, params);
   }
 
   get(id: ModelId): APIRequestPromise {
-    return api.getItem(this.pathname, id);
+    return request.get(this.pathname, id);
   }
 
   post(body: Dictionary): APIRequestPromise {
-    return api.createItem(this.pathname, body);
+    return request.create(this.pathname, body);
   }
 
   patch(id: ModelId, body: Dictionary): APIRequestPromise {
-    return api.updateItem(this.pathname, body, id);
+    return request.patch(this.pathname, body, id);
   }
 
   delete(id: ModelId): APIRequestPromise {
-    return api.deleteItem(this.pathname, id);
+    return request.delete(this.pathname, id);
   }
 }

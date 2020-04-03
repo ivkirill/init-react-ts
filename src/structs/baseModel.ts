@@ -1,15 +1,16 @@
-import { ModelProps, ModelId } from 'interfaces';
-import BaseStruct from './baseStruct';
-import heap from './heap';
+import { ModelId, Dictionary } from 'interfaces';
+import { BaseStruct, heap } from 'structs';
 
 export default class BaseModel extends BaseStruct {
   id: ModelId;
+  model: string;
+  updated?: Number;
 
-  static getInstance<T extends BaseStruct>(props: ModelProps, key: string = ''): T {
+  static getInstance(props: Dictionary): BaseModel | Dictionary {
     if (props.id != null) {
-      return heap.findOrCreateModel(props, this, key);
+        return heap.findModel(props, this);
     }
 
-    return <T>this.createInstance(props);
+    return this.createInstance(props);
   }
 }

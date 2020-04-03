@@ -1,7 +1,7 @@
 {
-  "name": "vending-machine",
+  "name": "start-app",
   "version": "0.1.0",
-  "description": "Vending Machine App",
+  "description": "App",
   "author": "Kirill Ivanov",
   "license": "MIT",
   "main": "dist/app.bundle.js",
