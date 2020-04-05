@@ -134,4 +134,6 @@ export class Heap {
   }
 }
 
-export default new Heap();
+const heap = new Heap()
+
+export default heap;

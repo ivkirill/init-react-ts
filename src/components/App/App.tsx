@@ -1,11 +1,25 @@
-import React from 'react';
-import cn from 'classnames';
+import React, { PureComponent } from 'react';
+import { Provider } from 'mobx-react';
+
+import stores from 'stores';
+
+import {
+  Router,
+  ErrorGlobalBoundry,
+} from 'components';
 
 import s from './App.scss';
-class App extends React.Component {
+
+class App extends PureComponent {
   render() {
     return (
-      <div className={cn(s.root)}>App</div>
+      <Provider {...stores}>
+        <ErrorGlobalBoundry>
+          <div className={s.root}>
+            <Router />
+          </div>
+        </ErrorGlobalBoundry>
+      </Provider>
     );
   }
 }

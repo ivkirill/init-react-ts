@@ -1,17 +1,18 @@
 const path = require('path');
+const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const {
-  PATH_SRC, PATH_DIST, resolve, rules,
-} = require('./webpack.basic');
+const { PATH_SRC, PATH_DIST, resolve, rules } = require('./webpack.basic');
 
 module.exports = {
   resolve,
   mode: 'development',
+  devtool: 'eval-source-map',
   entry: PATH_SRC,
   output: {
-    filename: '[name].js',
     path: PATH_DIST,
+    filename: '[name].js',
+    chunkFilename: '[name].chunk.js',
   },
   module: {
     rules: [
@@ -25,7 +26,10 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
+              modules: {
+                mode: 'local',
+                localIdentName: '[path][name]__[local]--[hash:base64:5]',
+              },
             }
           },
           {
@@ -37,9 +41,12 @@ module.exports = {
   },
   devServer: {
     inline: true,
-    port: 8888
+    port: 5012
   },
   plugins: [
+    new Webpack.DefinePlugin({
+      __DEV__: true,
+    }),
     new HtmlWebpackPlugin({ inject: true, template: path.join(PATH_SRC, 'index.html') })
   ]
 };

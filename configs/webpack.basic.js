@@ -16,6 +16,8 @@ exports.resolve = {
     api: `${PATH_SRC}/api`,
     utils: `${PATH_SRC}/utils`,
     structs: `${PATH_SRC}/structs`,
+    consts: `${PATH_SRC}/consts`,
+    stores: `${PATH_SRC}/stores`,
     types: `${PATH_SRC}/types`,
     entities: `${PATH_SRC}/types/entities`,
     interfaces: `${PATH_SRC}/types/interfaces`,
@@ -61,16 +63,16 @@ exports.rules = [
 ];
 
 exports.optimization = {
-  splitChunks: {
-    automaticNameDelimiter: '.',
-    cacheGroups: {
-      vendor: {
-        test: /[\/]node_modules[\/].*.(js|ts)x?/,
-        chunks: 'initial',
-        reuseExistingChunk: true,
-        name: 'vendor',
-        filename: 'vendor.js',
-      },
-    },
-  },
+  // splitChunks: {
+  //   automaticNameDelimiter: '.',
+  //   cacheGroups: {
+  //     vendor: {
+  //       test: /[\/]node_modules[\/].*.(js|ts)x?/,
+  //       chunks: 'initial',
+  //       reuseExistingChunk: true,
+  //       name: 'vendor',
+  //       filename: 'vendor.js',
+  //     },
+  //   },
+  // },
 };

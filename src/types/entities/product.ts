@@ -1,8 +1,8 @@
 import PropTypes, {  } from 'prop-types';
 import { StructPropTypes } from 'interfaces';
-import { BaseStruct } from 'structs';
+import { BaseModel } from 'structs';
 
-export class Product extends BaseStruct {
+export class Product extends BaseModel {
   id: number;
   model: 'Product';
   displayName: string;

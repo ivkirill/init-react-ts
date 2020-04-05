@@ -8,27 +8,15 @@ import {
   BaseModelClass,
 } from 'interfaces';
 
-import { API } from 'api';
+import API from 'api';
+import { BaseModel } from 'structs';
 
-// structs for item and list may be diffrent
-interface Props {
-  api: API;
-  entity: BaseModelClass;
-}
-
-export default class EntityStore<T extends BaseModelClass> {
-  api: API;
-  entity:  BaseModelClass;
-
-  constructor (props: Props) {
-    const { api, entity } = props;
-
-    this.api = api;
-    this.entity = entity;
-  }
+export default class EntityStore<T extends BaseModel> {
+  protected api: API;
+  protected entity: BaseModelClass;
 
   /**
-   * Single fetched record.
+   * Last single fetched record.
    * Is useful when it's required to fetch only one record, without accessing a list of records
    * (searching fetched record in list).
    */
@@ -60,7 +48,7 @@ export default class EntityStore<T extends BaseModelClass> {
 
   @observable fetching: boolean = false;
 
-  async fetchList(params: APIQueryListParams): Promise<Dictionary<T>> {
+  async fetchList(params: APIQueryListParams = {}): Promise<Dictionary<T>> {
     const { listName = 'all' } = params;
 
     this.fetching = true;

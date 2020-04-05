@@ -1,5 +1,6 @@
 import { ModelId, Dictionary } from 'interfaces';
-import { BaseStruct, heap } from 'structs';
+import { heap } from 'stores';
+import BaseStruct from './baseStruct';
 
 export default class BaseModel extends BaseStruct {
   id: ModelId;

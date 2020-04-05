@@ -15,10 +15,10 @@ module.exports = {
     app: `${PATH_SRC}/index.tsx`,
   },
   output: {
-    filename: 'app.js',
     path: PATH_STATIC,
     publicPath: '/dist/',
-    chunkFilename: '[hash:5].[id].app.js',
+    filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js',
   },
   module: {
     rules: [
@@ -66,6 +66,9 @@ module.exports = {
     new SimpleProgressWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: 'bundle.css',
+    }),
+    new Webpack.DefinePlugin({
+      __DEV__: false,
     }),
   ],
 };

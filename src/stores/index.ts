@@ -1,18 +1,17 @@
-import * as api from 'api';
+import heap, { Heap } from './heap';
 import EntityStore from './base';
 
-import {
-  Product,
-} from 'entities';
+import ProductStore from './products';
 
 const stores = {
   EntityStore,
-
-  products: new EntityStore({
-    api: api.products,
-    entity: Product,
-  }),
+  ProductStore,
 };
 
-export { EntityStore };
+export {
+  heap,
+  Heap,
+  ProductStore,
+};
+
 export default stores;
