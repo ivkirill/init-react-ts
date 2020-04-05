@@ -6,7 +6,7 @@ const HomePage = () => import(/* webpackChunkName: 'HomePage' */ './HomePage');
 
 export default () => {
   const fetch = [
-    ProductStore.fetchList()
+    ProductStore.fetchList(),
   ]
 
   return (

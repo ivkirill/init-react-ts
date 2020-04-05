@@ -1,7 +1,8 @@
-import React, { PureComponent, FunctionComponent } from 'react';
+import React, { PureComponent, FunctionComponent, ComponentClass } from 'react';
 
 interface Props {
   resolve: () => Promise<any>;
+  fallback?: ComponentClass | FunctionComponent;
   fetch?: Promise<any>[];
 }
 
@@ -18,7 +19,7 @@ export default class AsyncRoute extends PureComponent<Props, State> {
     }
   }
 
-  // after the initial render, wait for module to load
+  // after the initial render, wait for module to load and also fetch for initial data if needed
   async componentDidMount() {
     const { resolve, fetch } = this.props;
     const { default: module } = await resolve();
@@ -33,14 +34,21 @@ export default class AsyncRoute extends PureComponent<Props, State> {
   }
 
   render() {
+    const { fallback } = this.props;
     const { module } = this.state;
 
-    if (module != null) {
+    if (module) {
       const ComponentRender = module;
 
       return <ComponentRender />;
     }
 
-    return <div>Loading</div>
+    if (fallback) {
+      const ComponentFallback = fallback;
+
+      return <ComponentFallback />;
+    }
+
+    return null;
   }
 };
