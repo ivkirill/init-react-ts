@@ -1,13 +1,12 @@
-import request, { AxiosRequestConfig, AxiosResponse, AxiosError, CancelTokenSource } from 'axios';
 import { Dictionary } from 'interfaces';
 
-export type APIResponse = AxiosResponse;
-export type APIRequestConfig = AxiosRequestConfig;
-export type APIError = AxiosError;
-export type APICancelTokenSource = CancelTokenSource;
-
-export const APICancelToken = request.CancelToken;
-export const isCancelError = request.isCancel;
+export type APIResponse = {
+  results: any;
+};
+export type APIRequestConfig = Partial<Request>;
+export type APIError = {
+  error: string;
+};
 
 export interface APIRequestPromise<T = Dictionary> extends Promise<T> {}
 

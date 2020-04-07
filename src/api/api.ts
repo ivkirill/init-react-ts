@@ -4,7 +4,7 @@ import { request } from 'api';
 export default class API {
   constructor(readonly pathname: string) {}
 
-  list(params?: APIQueryParams): APIRequestPromise {
+  list(params?: APIQueryParams): APIRequestPromise<[]> {
     return request.list(this.pathname, params);
   }
 

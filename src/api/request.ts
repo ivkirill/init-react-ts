@@ -1,4 +1,3 @@
-import request, { AxiosInstance, AxiosPromise } from 'axios';
 import {
   APIQueryParams,
   APIRequestPromise,
@@ -9,6 +8,7 @@ import {
   Dictionary,
   ModelId,
 } from 'interfaces';
+import { API_HEADERS, API_SERVER } from 'consts';
 
 function getQuery(params: Dictionary<string> = {}): string {
   // TODO: add tests
@@ -18,26 +18,25 @@ function getQuery(params: Dictionary<string> = {}): string {
 class API {
   instance: API;
   exists: boolean;
-  request: AxiosInstance;
   pending: Map<string, APIRequestPromise>;
 
   constructor() {
-    // if (this.exists) {
-    //   return this.instance;
-    // }
+    if (this.exists) {
+      return this.instance;
+    }
 
-    // this.instance = this;
-    // this.exists = true;
+    this.instance = this;
+    this.exists = true;
 
-    this.request = request.create({
-      timeout: 160000,
-      withCredentials: true,
-    });
+    // this.request = request.create({
+    //   timeout: 160000,
+    //   withCredentials: true,
+    // });
 
     this.pending = new Map();
   }
 
-  makeRequest(requestParams: APIRequestParams): APIRequestPromise<APIRequestParams> {
+  makeRequest(requestParams: APIRequestParams): APIRequestPromise<any> {
     const { method, url = '', data = {}, config = {} } = requestParams;
 
     const currentQuery = [
@@ -51,32 +50,37 @@ class API {
       return <APIRequestPromise<APIRequestParams>>this.pending.get(currentQuery);
     }
 
-    config.headers = { 'X-XSRFToken': '1234' }; // TODO: getCookie('_xsrf')
 
-    const requestMethod: (url:string, data: Dictionary<string>, config: APIRequestConfig)
-      => AxiosPromise = this.request[method];
+    // url:string, data: Dictionary<string>, config: APIRequestConfig
+    // let request;
+    // if (method === 'post' || method === 'put' || method === 'patch') {
+    //   requestMethod = (requestUrl, data, config) => this.request[method];
+    // }
+    // else {
+    //   requestMethod = (requestUrl, config) => this.request[method];
+    // }
 
-    let normizedUrl = url;
+    const promise = fetch(`${API_SERVER}${url}`, {
+        method,
+        headers: new Headers(API_HEADERS),
+        // body: JSON.stringify(data),
+      })
 
-    if (normizedUrl[0] !== '/') {
-      normizedUrl = `/${normizedUrl}`;
-    }
-
-    const promise = requestMethod(`/-${normizedUrl}`, data, config)
+      .then(response => response.json())
       .then<APIRequestParams>((response: APIResponse) => {
         this.pending.delete(currentQuery);
 
-        return response.data;
+        return response.results;
       })
-      .catch((error: APIError) => {
+      .catch((response: APIError) => {
         this.pending.delete(currentQuery);
 
-        if (error.code === 'ECONNABORTED') {
+        if (response.error === 'ECONNABORTED') {
           // TODO: Send error info to external logger
         }
 
         // Forward all errors to their respective owners
-        throw error;
+        throw response;
       });
 
     this.pending.set(currentQuery, promise);
@@ -92,8 +96,8 @@ class API {
     return this.makeRequest({ method: 'get', url: `${url}${`${id}` ? `/${id}` : ''}${getQuery(params)}` });
   }
 
-  list(url: string, params: APIQueryParams = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'get', url, config: { params } });
+  list(url: string, params: APIQueryParams = {}): APIRequestPromise<[]> {
+    return this.makeRequest({ method: 'get', url, data: params });
   }
 
   post(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {

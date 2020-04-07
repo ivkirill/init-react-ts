@@ -3,7 +3,6 @@ import request from './request';
 
 export { request };
 
-export const products = new API('/products');
-export const payment = new API('/payment');
+export const products = new API('/classes/Product');
 
 export default API;
