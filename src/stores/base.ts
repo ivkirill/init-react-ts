@@ -9,11 +9,21 @@ import {
 } from 'interfaces';
 
 import API from 'api';
-import { BaseModel } from 'structs';
 
-export default class EntityStore<T extends BaseModel> {
-  protected api: API;
-  protected entity: BaseModelClass;
+interface Props {
+  api: API;
+  entity: BaseModelClass;
+}
+
+export default class EntityStore<T extends BaseModelClass> {
+  api: API;
+  entity: BaseModelClass;
+
+  constructor (props: Props) {
+    const { api, entity } = props;
+    this.api = api;
+    this.entity = entity;
+  }
 
   /**
    * Last single fetched record.
@@ -36,9 +46,10 @@ export default class EntityStore<T extends BaseModel> {
    * @type {Dictionary<Array<ModelId>>}
    * @memberof EntityStore
    */
+
   @observable lists: Dictionary<Array<ModelId>> = {};
 
-    /**
+  /**
    * Fetched records metas object.
    * Contains meta information about request pagination
    *
@@ -54,25 +65,24 @@ export default class EntityStore<T extends BaseModel> {
     this.fetching = true;
 
     const response = await this.api.list(params);
-    const { meta, objects } = response;
 
     const list: Array<ModelId> = [];
 
-    this.items = objects.reduce((items: Dictionary<T>, responseItem: T) => {
-      const item = this.entity.getInstance(responseItem);
-      const { id } = item;
+    this.items = response.reduce((items: Dictionary<T>, responseItem: T) => {
+      const item = <T>this.entity.getStructInstance(responseItem);
+      const { objectId } = item;
 
-      if (id) {
-        list.push(id);
+      if (objectId) {
+        list.push(objectId);
 
-        return { ...items, ...{ [id]: item } }
+        return { ...items, ...{ [objectId]: item } }
       }
 
       return items;
     }, this.items);
 
     this.lists[listName] = list;
-    this.metas[listName] = meta;
+    // this.metas[listName] = meta;
 
     this.fetching = false;
 
@@ -82,7 +92,7 @@ export default class EntityStore<T extends BaseModel> {
   async fetchItem(id: ModelId): Promise<T> {
     this.fetching = true;
 
-    const item = <T>this.entity.getInstance(await this.api.get(id));
+    const item = <T>this.entity.getStructInstance(await this.api.get(id));
 
     this.items[id] = item;
     this.item = this.items[id];

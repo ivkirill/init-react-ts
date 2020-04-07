@@ -1,4 +1,4 @@
-import { PropTypesSecret } from 'prop-types/lib/ReactPropTypesSecret';
+import propTypes from 'prop-types';
 import { Dictionary, StructPropTypes } from 'interfaces';
 
 export default class BaseStruct {
@@ -62,9 +62,13 @@ export default class BaseStruct {
     }
 
     Object.keys(props).map((propName: string) => {
-      if (this.propTypes[propName] !== undefined) {
-        Object.defineProperty(instance, propName, this.getPropertyValue(props, propName));
+      if (this.propTypes[propName] === undefined) {
+        console.warn(`${this.name} does not have property ${propName}`);
       }
+
+      Object.defineProperty(instance, propName, {
+        value: this.getPropertyValue(props, propName)
+      });
     });
 
     return instance;
@@ -85,17 +89,11 @@ export default class BaseStruct {
         continue;
       }
 
-      const error: Error | null = this.propTypes[propName](
-        props,
-        propName,
-        this.name,
-        'prop',
-        propName,
-        PropTypesSecret, // Without this argument, function will not allow to call itself
-      );
-
-      if (error !== null) {
-        return error;
+      try {
+        propTypes.checkPropTypes(this.propTypes, props, propName, this.name);
+      }
+      catch(e) {
+        return e;
       }
     }
 

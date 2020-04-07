@@ -1,4 +1,3 @@
-import heap, { Heap } from './heap';
 import EntityStore from './base';
 
 import ProductStore from './products';
@@ -9,8 +8,7 @@ const stores = {
 };
 
 export {
-  heap,
-  Heap,
+  stores,
   ProductStore,
 };
 

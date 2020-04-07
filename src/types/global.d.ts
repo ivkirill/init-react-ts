@@ -1,10 +1,9 @@
-import { Heap } from 'stores';
+
+import { Dictionary } from './interfaces';
 
 declare global {
   export interface Window {
-    DEV: {
-      heap: Heap
-    };
+    DEV: Dictionary;
   }
 
   export const __DEV__: string;
