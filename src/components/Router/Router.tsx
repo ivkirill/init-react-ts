@@ -4,7 +4,6 @@ import routes from 'routes';
 
 import { ErrorResponseBoundry } from 'components';
 
-
 export default function Router() {
 
   console.log({
@@ -16,10 +15,9 @@ export default function Router() {
       <ErrorResponseBoundry>
 
         <Switch>
-          <Route exact path="/" component={routes.home} />
+          <Route exact component={routes.home} path="/" />
 
-
-          {/* <Route exact component={routes.notFound} path="*" /> */}
+          <Route component={routes.notFound} path="*" />
         </Switch>
 
       </ErrorResponseBoundry>
