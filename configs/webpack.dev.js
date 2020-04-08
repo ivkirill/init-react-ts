@@ -2,7 +2,7 @@ const path = require('path');
 const Webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const { PATH_SRC, PATH_DIST, resolve, rules } = require('./webpack.basic');
+const { PATH_SRC, PATH_DIST, resolve, rules, postcss_loader } = require('./webpack.common');
 
 module.exports = {
   resolve,
@@ -35,6 +35,7 @@ module.exports = {
           {
             loader: 'sass-loader',
           },
+          postcss_loader,
         ]
       },
     ],

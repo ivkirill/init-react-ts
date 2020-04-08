@@ -1,0 +1,153 @@
+@import 'variables.scss';
+
+html {
+  font-size: 16px;
+  color: var(--color-black-90);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-size-base-line-height);
+  font-family: var(--font-family-base);
+  min-width: var(--page-min-width);
+
+  /* Prevent adjustments of font size after orientation changes in
+    IE on Windows Phone and in iOS. */
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-size: var(--font-size-base);
+}
+
+a {
+  color: var(--color-green-50);
+
+  /* Remove the gray background on active links in IE 10. */
+  background-color: transparent;
+
+  /* Remove gaps in links underline in iOS 8+ and Safari 8+ */
+  -webkit-text-decoration-skip: objects;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+/* Cross browser fixes */
+hr {
+  box-sizing: content-box;
+  height: 0;
+  overflow: visible;
+}
+
+pre {
+  font-size: inherit;
+}
+
+sub,
+sup {
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Add the correct display in iOS 4-7 */
+audio:not([controls]) {
+  display: none;
+  height: 0;
+}
+
+/** Remove the border on images inside links in IE 10- */
+img {
+  border-style: none;
+}
+
+/* Hide the overflow in IE */
+svg:not(:root) {
+  overflow: hidden;
+}
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+}
+
+/* Show the overflow in IE */
+
+button,
+input {
+  overflow: visible;
+}
+
+/* Remove the inheritance of text transform in Firefox. */
+button,
+select {
+  text-transform: none;
+}
+
+/* Remove the inner border and padding in Firefox. */
+button::-moz-focus-inner,
+[type='button']::-moz-focus-inner,
+[type='reset']::-moz-focus-inner,
+[type='submit']::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+fieldset {
+  padding: 0;
+}
+
+legend {
+  color: inherit;
+  padding: 0;
+
+  /* Correct the text wrapping in Edge and IE. */
+  white-space: normal;
+  max-width: 100%;
+  display: table;
+  box-sizing: border-box;
+}
+
+progress {
+  vertical-align: baseline;
+}
+
+/* Remove the default vertical scrollbar in IE */
+textarea {
+  overflow: auto;
+}
+
+[type='checkbox'],
+[type='radio'] {
+  padding: 0;
+}
+
+::-webkit-file-upload-button {
+  font: inherit;
+
+  /* Correct the inability to style clickable types in iOS and Safari. */
+  -webkit-appearance: button;
+}
+
+summary {
+  display: list-item;
+}

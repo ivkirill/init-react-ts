@@ -1,0 +1,37 @@
+:root {
+  /* Look here http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/ for more details */
+
+  --font-family-serif: sans-serif;
+  --font-family-base: --font-family-serif;
+
+  --font-weight-thin: 100;
+  --font-weight-light: 300;
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-bold: 700;
+
+  --font-size-base: 1rem;
+  --font-size-base-line-height: 1.5rem;
+
+  /* Размеры для компонента Text */
+  --font-size-xxl: 2.5rem; /* 40px */
+  --font-size-xxl-line-height: 3rem; /* 48px */
+
+  --font-size-xl: 1.75rem; /* 28px */
+  --font-size-xl-line-height: 2rem; /* 32px */
+
+  --font-size-l: 1.3rem; /* 24px */
+  --font-size-l-line-height: 1.6rem; /* 28px */
+
+  --font-size-m: 1rem; /* 16px */
+  --font-size-m-line-height: 1.25rem; /* 20px */
+
+  --font-size-s: 0.875rem; /* 14px */
+  --font-size-s-line-height: 1.25rem; /* 20px */
+
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-xs-line-height: 1rem; /* 16px */
+
+  --font-size-xxs: 0.5625rem; /* 9px */
+  --font-size-xxs-line-height: 0.75rem; /* 12px */
+}

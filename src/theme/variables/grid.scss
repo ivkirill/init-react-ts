@@ -1,0 +1,35 @@
+:root {
+  /*
+   * Media queries breakpoints
+   * ======================================================================== */
+
+  --page-min-width: 375px;
+
+  --container-xs-width: 480px;
+  --container-sm-width: 752px;
+  --container-md-width: 944px;
+  --container-lg-width: 1270px;
+  --container-max-width: 1560px;
+
+  --grid-gutter-gap: var(--qs);
+  --grid-paddings: var(--grid-gutter-gap);
+  --grid-margins: calc(var(--grid-gutter-gap) * (-1));
+
+  --quant-size: 4px;
+
+  --desktop-min-width: calc(var(--container-md-width) + calc(var(--quant-size) * 4));
+
+  --icon-size-xs: var(--qs-3x);
+  --icon-size-sm: var(--qs-5x);
+  --icon-size-md: var(--qs-7x);
+  --icon-size-lg: var(--qs-12x);
+
+  --col-length: calc(100% / 24);
+
+
+  @custom-media --xs-viewport (width < 480px);
+  @custom-media --sm-viewport (width >= 480px);
+  @custom-media --md-viewport (width >= 768px);
+  @custom-media --lg-viewport (width >= 1024px);
+  @custom-media --lg-viewport (width >= 1280px);
+}

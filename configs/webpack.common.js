@@ -62,17 +62,11 @@ exports.rules = [
   },
 ];
 
-exports.optimization = {
-  // splitChunks: {
-  //   automaticNameDelimiter: '.',
-  //   cacheGroups: {
-  //     vendor: {
-  //       test: /[\/]node_modules[\/].*.(js|ts)x?/,
-  //       chunks: 'initial',
-  //       reuseExistingChunk: true,
-  //       name: 'vendor',
-  //       filename: 'vendor.js',
-  //     },
-  //   },
-  // },
-};
+exports.postcss_loader = {
+  loader: 'postcss-loader',
+  options: {
+    config: {
+      path: './configs/postcss.config.js',
+    },
+  },
+}

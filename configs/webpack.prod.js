@@ -3,8 +3,8 @@ const SimpleProgressWebpackPlugin = require('simple-progress-webpack-plugin');
 const Webpack = require('webpack');
 
 const {
-  PATH_SRC, PATH_STATIC, resolve, rules, optimization,
-} = require('./webpack.basic');
+  PATH_SRC, PATH_STATIC, resolve, rules, optimization, postcss_loader,
+} = require('./webpack.common');
 
 module.exports = {
   resolve,
@@ -46,16 +46,9 @@ module.exports = {
               import: true,
             },
           },
+          postcss_loader,
           {
             loader: 'sass-loader',
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              config: {
-                path: './configs/postcss.config.js',
-              },
-            },
           },
         ],
       },
