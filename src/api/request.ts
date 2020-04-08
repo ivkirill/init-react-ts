@@ -50,7 +50,6 @@ class API {
       return <APIRequestPromise<APIRequestParams>>this.pending.get(currentQuery);
     }
 
-
     // url:string, data: Dictionary<string>, config: APIRequestConfig
     // let request;
     // if (method === 'post' || method === 'put' || method === 'patch') {
@@ -89,7 +88,7 @@ class API {
   }
 
   create(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'post', url, data, config });
+    return this.makeRequest({ method: 'post', url: url, data: data, config: config });
   }
 
   get(url: string, id?: ModelId, params: APIQueryParams = {}): APIRequestPromise {
@@ -97,15 +96,15 @@ class API {
   }
 
   list(url: string, params: APIQueryParams = {}): APIRequestPromise<[]> {
-    return this.makeRequest({ method: 'get', url, data: params });
+    return this.makeRequest({ method: 'get', url: url, data: params });
   }
 
   post(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'post', url, data, config });
+    return this.makeRequest({ method: 'post', url: url, data: data, config: config });
   }
 
   patch(url: string, data: Dictionary, id: ModelId): APIRequestPromise {
-    return this.makeRequest({ method: 'patch', url: `${url}${id ? `/${id}` : ''}`, data });
+    return this.makeRequest({ method: 'patch', url: `${url}${id ? `/${id}` : ''}`, data: data });
   }
 
   delete(url: string, id: ModelId): APIRequestPromise {

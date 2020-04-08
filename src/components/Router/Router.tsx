@@ -5,11 +5,6 @@ import routes from 'routes';
 import { ErrorResponseBoundry } from 'components';
 
 export default function Router() {
-
-  console.log({
-    routes
-  })
-
   return (
     <BrowserRouter>
       <ErrorResponseBoundry>

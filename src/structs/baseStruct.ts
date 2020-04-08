@@ -45,7 +45,7 @@ export default class BaseStruct {
     const defaultProps: Dictionary<string> = {};
     const instanceValues = Object.create(instance);
 
-    Object.getOwnPropertyNames(instance).forEach(propName => {
+    Object.getOwnPropertyNames(instance).forEach((propName) => {
       if (this.propTypes[propName] !== undefined) {
         defaultProps[propName] = instanceValues[propName];
       }
@@ -67,7 +67,7 @@ export default class BaseStruct {
       }
 
       Object.defineProperty(instance, propName, {
-        value: this.getPropertyValue(props, propName)
+        value: this.getPropertyValue(props, propName),
       });
     });
 
@@ -92,7 +92,7 @@ export default class BaseStruct {
       try {
         propTypes.checkPropTypes(this.propTypes, props, propName, this.name);
       }
-      catch(e) {
+      catch (e) {
         return e;
       }
     }

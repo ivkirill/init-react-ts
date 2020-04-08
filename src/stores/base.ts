@@ -75,7 +75,7 @@ export default class EntityStore<T extends BaseModelClass> {
       if (objectId) {
         list.push(objectId);
 
-        return { ...items, ...{ [objectId]: item } }
+        return { ...items, ...{ [objectId]: item } };
       }
 
       return items;

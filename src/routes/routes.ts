@@ -3,7 +3,7 @@ import { routeNames } from 'consts';
 import { StrictDictionary } from 'interfaces';
 
 import home from './home';
-import notFound from './home';
+// import notFound from './home';
 
 const routes: StrictDictionary<routeNames, FunctionComponent> = {
   // Home
@@ -11,9 +11,8 @@ const routes: StrictDictionary<routeNames, FunctionComponent> = {
   // List
   [routeNames.list]: home,
   // 404
-  [routeNames.notFound]: notFound,
+  [routeNames.notFound]: home,
 };
-
 
 // const routes = prepareRoutes(routesChunks, meta);
 

@@ -5,5 +5,5 @@ export const API_HEADERS_REST_API = 'k5w0RzUWBwg618JIrQuSSzALViLjiIhcGnHUc8Xs';
 export const API_HEADERS = {
   'X-Parse-Application-Id': API_HEADERS_APP_ID,
   'X-Parse-REST-API-Key': API_HEADERS_REST_API,
-  'Content-Type': 'application/json'
-}
+  'Content-Type': 'application/json',
+};

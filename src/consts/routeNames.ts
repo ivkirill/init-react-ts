@@ -5,6 +5,6 @@ enum routeNames {
 
   // Errors pages
   notFound = 'notFound',
-};
+}
 
 export default routeNames;

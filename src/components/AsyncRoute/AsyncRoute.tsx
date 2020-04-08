@@ -7,7 +7,7 @@ interface Props {
 }
 
 interface State {
-  module: FunctionComponent | null,
+  module: FunctionComponent | null;
 }
 
 export default class AsyncRoute extends PureComponent<Props, State> {
@@ -16,7 +16,7 @@ export default class AsyncRoute extends PureComponent<Props, State> {
 
     this.state = {
       module: null,
-    }
+    };
   }
 
   // after the initial render, wait for module to load and also fetch for initial data if needed
@@ -30,7 +30,7 @@ export default class AsyncRoute extends PureComponent<Props, State> {
 
     this.setState({
       module,
-    })
+    });
   }
 
   render() {
@@ -51,4 +51,4 @@ export default class AsyncRoute extends PureComponent<Props, State> {
 
     return null;
   }
-};
+}
