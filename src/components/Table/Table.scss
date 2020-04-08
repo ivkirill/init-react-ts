@@ -1,0 +1,25 @@
+.root {
+  max-width: 100%;
+
+  > div {
+    display: grid;
+    grid-column-gap: var(--qs-2x);
+  }
+}
+
+.header {
+  display: grid;
+  padding: var(--qs-2x) var(--qs-4x);
+
+  .head {
+    display: grid;
+    font-size: var(--font-size-xs);
+    line-height: var(--font-size-xs-line-height);
+    color: var(--color-black-10);
+
+    &.button {
+      cursor: pointer;
+      width: var(--qs-4x);
+    }
+  }
+}
