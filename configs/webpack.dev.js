@@ -10,6 +10,7 @@ module.exports = {
   devtool: 'eval-source-map',
   entry: PATH_SRC,
   output: {
+    publicPath: '/',
     path: PATH_DIST,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js',
@@ -42,6 +43,8 @@ module.exports = {
   },
   devServer: {
     inline: true,
+    public: 'local.io',
+    historyApiFallback: true,
     port: 5012
   },
   plugins: [

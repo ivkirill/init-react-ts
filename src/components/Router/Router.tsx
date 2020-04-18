@@ -1,20 +1,17 @@
-import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 import routes from 'routes';
 
-import { ErrorResponseBoundry } from 'components';
+import { ErrorResponseBoundry, Prefetcher, LoaderNavigate } from 'components';
 
 export default function Router() {
+  const [inProgress, startNavigate] = useState(false);
+
   return (
     <BrowserRouter>
       <ErrorResponseBoundry>
-
-        <Switch>
-          <Route exact component={routes.home} path="/" />
-
-          <Route component={routes.notFound} path="*" />
-        </Switch>
-
+        <LoaderNavigate inProgress={inProgress} />
+        <Prefetcher routes={routes} startNavigate={startNavigate} />
       </ErrorResponseBoundry>
     </BrowserRouter>
   );

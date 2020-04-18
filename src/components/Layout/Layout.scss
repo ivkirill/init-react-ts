@@ -1,0 +1,14 @@
+.root {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  flex-grow: 1;
+  min-height: 100vh;
+}
+
+.navigation {
+  background-color: var(--color-green-90);
+}
+
+.content {
+  padding: var(--qs-2x);
+}

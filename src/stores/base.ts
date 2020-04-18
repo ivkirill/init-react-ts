@@ -62,6 +62,8 @@ export default class EntityStore<T extends BaseModelClass> {
   async fetchList(params: APIQueryListParams = {}): Promise<Dictionary<T>> {
     const { listName = 'all' } = params;
 
+    console.log('call fetch');
+
     this.fetching = true;
 
     const response = await this.api.list(params);

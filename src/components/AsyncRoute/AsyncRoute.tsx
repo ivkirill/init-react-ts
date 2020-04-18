@@ -1,54 +1,62 @@
-import React, { PureComponent, FunctionComponent, ComponentClass } from 'react';
+import React, { PureComponent, FunctionComponent, ReactElement } from 'react';
 
 interface Props {
   resolve: () => Promise<any>;
-  fallback?: ComponentClass | FunctionComponent;
+  fallback?: ReactElement;
   fetch?: Promise<any>[];
 }
 
 interface State {
-  module: FunctionComponent | null;
+  component: FunctionComponent | null;
 }
+
+// Usage for simple AsyncRoute
+
+// export default () => {
+//   const fetch = [
+//     ProductStore.fetchList(),
+//   ];
+
+//   return (
+//     <AsyncRoute fallback={<Loader text="product" />} resolve={ProductsPage} fetch={fetch} />
+//   );
+// };
 
 export default class AsyncRoute extends PureComponent<Props, State> {
   constructor(props: Props) {
     super(props);
 
     this.state = {
-      module: null,
+      component: null,
     };
   }
 
   // after the initial render, wait for module to load and also fetch for initial data if needed
-  async componentDidMount() {
+  async getInitialProps() {
     const { resolve, fetch } = this.props;
-    const { default: module } = await resolve();
+    const { default: component } = await resolve();
 
     if (fetch) {
       await Promise.all(fetch);
     }
 
     this.setState({
-      module,
+      component,
     });
   }
 
   render() {
     const { fallback } = this.props;
-    const { module } = this.state;
+    const { component } = this.state;
 
-    if (module) {
-      const ComponentRender = module;
-
-      return <ComponentRender />;
+    if (component) {
+      return React.createElement(component);
     }
 
     if (fallback) {
-      const ComponentFallback = fallback;
-
-      return <ComponentFallback />;
+      return fallback;
     }
 
-    return null;
+    return <div />;
   }
 }

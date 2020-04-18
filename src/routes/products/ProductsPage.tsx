@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import { Layout } from 'components';
 
-import s from './HomePage.scss';
+import s from './ProductsPage.scss';
 
-class HomePage extends Component {
+class ProductsPage extends Component {
   render() {
     return (
       <Layout className={s.root}>
-        HomePage
+        ProductsPage
       </Layout>
     );
   }
 }
 
-export default HomePage;
+export default ProductsPage;

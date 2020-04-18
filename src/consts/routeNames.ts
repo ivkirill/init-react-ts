@@ -1,7 +1,7 @@
 enum routeNames {
   // Home
   home = 'home',
-  list = 'list',
+  products = 'products',
 
   // Errors pages
   notFound = 'notFound',

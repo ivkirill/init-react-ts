@@ -1,15 +1,15 @@
-import React from 'react';
-import { AsyncRoute } from 'components';
-import { ProductStore } from 'stores';
+// import React from 'react';
+// import { AsyncRoute, Loader } from 'components';
+import { HomeStore } from 'stores';
 
-const HomePage = () => import(/* webpackChunkName: 'HomePage' */ './HomePage');
+const HomePage = () => import(
+  /* webpackPrefetch: true */
+  /* webpackChunkName: 'HomePage' */
+  './HomePage');
 
-export default () => {
-  const fetch = [
-    ProductStore.fetchList(),
-  ];
-
-  return (
-    <AsyncRoute resolve={HomePage} fetch={fetch} />
-  );
+export default {
+  module: HomePage,
+  fetch: () => [
+    HomeStore.fetchList(),
+  ],
 };

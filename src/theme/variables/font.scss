@@ -2,7 +2,7 @@
   /* Look here http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/ for more details */
 
   --font-family-serif: sans-serif;
-  --font-family-base: --font-family-serif;
+  --font-family-base: var(--font-family-serif);
 
   --font-weight-thin: 100;
   --font-weight-light: 300;
