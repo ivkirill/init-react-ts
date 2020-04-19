@@ -1,7 +1,11 @@
-.root {
-  padding: var(--qs-3x) var(--qs-2x);
+.link {
+  display: block;
+  padding: var(--qs) var(--qs-2x);
+  line-height: 30px;
+}
 
-  a {
-    display: block;
-  }
+.active {
+  text-decoration: none;
+  background-color: var(--color-green-50);
+  color: var(--color-white-10);
 }

@@ -11,6 +11,7 @@ interface Props extends RouteComponentProps {
   onClick?: (event: MouseEvent) => any;
   to: string;
   useRouter?: boolean;
+  exact?: boolean;
   isActive?: (match: match, location: Location ) => boolean;
 }
 
@@ -20,7 +21,7 @@ interface Props extends RouteComponentProps {
  */
 class Link extends PureComponent<Props> {
   render() {
-    const { activeClassName, children, className, onClick, to, useRouter = true, isActive } = this.props;
+    const { activeClassName, children, className, onClick, to, useRouter = true, isActive, exact = true } = this.props;
     const { match, location } = this.props;
 
     if (useRouter) {
@@ -30,7 +31,7 @@ class Link extends PureComponent<Props> {
           className={className}
           onClick={onClick}
           to={to}
-          exact={false}
+          exact={exact}
           isActive={isActive}
         >
           {children}

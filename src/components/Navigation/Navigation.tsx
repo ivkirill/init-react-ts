@@ -15,7 +15,9 @@ class Navigation extends PureComponent {
             const caption = (item.caption || (() => ''))();
 
             return (
-              <Link key={key} to={item.path}>{`${caption}`}</Link>
+              <Link key={key} to={item.path} className={s.link} activeClassName={s.active}>
+                {caption}
+              </Link>
             );
           })
         }
