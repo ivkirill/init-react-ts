@@ -16,7 +16,6 @@
     "jsx": "react",
     "baseUrl": "./src",
     "paths": {
-      "src/*": ["*"],
       "api": ["api"],
       "api/*": ["api/*"],
       "utils": ["utils"],
@@ -36,7 +35,8 @@
       "structs": ["structs"],
       "structs/*": ["structs/*"],
       "interfaces": ["types/interfaces"],
-      "interfaces/*": ["types/interfaces/*"]
+      "interfaces/*": ["types/interfaces/*"],
+      "src/*": ["*"]
     }
   },
   "lib": [

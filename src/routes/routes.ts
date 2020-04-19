@@ -8,18 +8,18 @@ import home from './home';
 import products from './products';
 import notFound from './notFound';
 
-interface Route {
+export interface AppRoute {
+  fetch?: () => Promise<any>[];
   module: () => Promise<any>;
   component?: ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
-  fetch?: () => Promise<any>[];
   exact?: boolean;
   path: string;
   caption?: () => string;
 }
 
-export type Routes = StrictDictionary<routeNames, Route>;
+export type AppRoutes = StrictDictionary<routeNames, AppRoute>;
 
-const routes: Routes = {
+const routes: AppRoutes = {
   // Home
   [routeNames.home]: {
     ...home,

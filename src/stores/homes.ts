@@ -1,6 +1,6 @@
 import { test } from 'api';
 import EntityStore from './base';
 
-import { Product } from 'entities';
+import { Test } from 'entities';
 
-export default new EntityStore({ api: test, entity: Product });
+export default new EntityStore({ api: test, entity: Test });

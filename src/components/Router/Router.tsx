@@ -5,13 +5,14 @@ import routes from 'routes';
 import { ErrorResponseBoundry, Prefetcher, LoaderNavigate } from 'components';
 
 export default function Router() {
-  const [inProgress, startNavigate] = useState(false);
+  const [inProgress, setNavigate] = useState(false);
 
   return (
     <BrowserRouter>
       <ErrorResponseBoundry>
         <LoaderNavigate inProgress={inProgress} />
-        <Prefetcher routes={routes} startNavigate={startNavigate} />
+
+        <Prefetcher routes={routes} setNavigate={setNavigate} />
       </ErrorResponseBoundry>
     </BrowserRouter>
   );
