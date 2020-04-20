@@ -1,5 +1,5 @@
 
-import { Dictionary } from './interfaces';
+import { Dictionary } from 'interfaces';
 
 declare global {
   export interface Window {

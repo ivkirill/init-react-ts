@@ -1,3 +1,16 @@
 .root {
   background-color: var(--color-black-50);
 }
+
+.productsTable {
+  width: 100%;
+}
+
+div.row {
+  display: grid;
+  grid-template-columns:
+    130px
+    1fr
+    1fr
+    1fr
+}

@@ -9,8 +9,8 @@ import products from './products';
 import notFound from './notFound';
 
 export interface AppRoute {
-  fetch?: () => Promise<any>[];
   module: () => Promise<any>;
+  fetch?: () => Promise<any>[];
   component?: ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
   exact?: boolean;
   path: string;

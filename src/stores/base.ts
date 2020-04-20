@@ -9,13 +9,14 @@ import {
 } from 'interfaces';
 
 import API from 'api';
+import { BaseModel } from 'structs';
 
 interface Props {
   api: API;
   entity: BaseModelClass;
 }
 
-export default class EntityStore<T extends BaseModelClass> {
+export default class EntityStore<T extends BaseModel> {
   api: API;
   entity: BaseModelClass;
 
@@ -69,7 +70,7 @@ export default class EntityStore<T extends BaseModelClass> {
     const list: Array<ModelId> = [];
 
     this.items = response.reduce((items: Dictionary<T>, responseItem: T) => {
-      const item = <T>this.entity.getStructInstance(responseItem);
+      const item = <BaseModelClass & T>this.entity.getStructInstance(responseItem);
       const { objectId } = item;
 
       if (objectId) {
