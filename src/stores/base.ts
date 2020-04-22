@@ -83,7 +83,6 @@ export default class EntityStore<T extends BaseModel> {
     }, this.items);
 
     this.lists[listName] = list;
-    // this.metas[listName] = meta;
 
     this.fetching = false;
 

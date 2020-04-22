@@ -1,2 +1,2 @@
-export { routes as default, AppRoutes, AppRoute } from './routes';
-export { navMain } from './navigation';
+export { routes, routesMap, AppRoutes, AppRoute, MatchProps, AppRouteMapped } from './routes';
+export { navMain, RouteCaption } from './navigation';

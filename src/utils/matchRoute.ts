@@ -1,20 +1,29 @@
 import { matchPath } from 'react-router-dom';
-import { AppRoutes, AppRoute } from 'routes';
+import { routes, AppRoute, MatchProps, AppRouteMapped } from 'routes';
 import { Location } from 'history';
 import { routeNames } from 'consts';
 
-export function matchRoute(routes: AppRoutes, location: Location): AppRoute {
-  const route = Object.keys(routes).find((name) => {
-    const routeName = name as routeNames;
-    const route = routes[routeName];
+export interface MatchRoute {
+  match: MatchProps;
+  route: AppRoute;
+}
 
-    const match = matchPath(location.pathname, {
+const defaultRoute = routes[routeNames.notFound];
+
+export function matchRoute(routesMap: AppRouteMapped[], location: Location): MatchRoute {
+  let match = null;
+
+  const matchRoute = routesMap.find((route) => {
+    match = matchPath(location.pathname, {
       path: route.path,
       exact: route.exact,
     });
 
     return match && route.module && route.fetch;
-  }) as routeNames;
+  });
 
-  return routes[route];
+  return {
+    match,
+    route: matchRoute || defaultRoute,
+  };
 }

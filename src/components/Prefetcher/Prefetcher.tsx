@@ -1,11 +1,11 @@
 import React, { Component, Dispatch, SetStateAction } from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Location } from 'history';
-import { AppRoutes, AppRoute } from 'routes';
+import { AppRoute, AppRouteMapped } from 'routes';
 import { matchRoute, isEqualObjects } from 'utils';
 
 interface Props extends RouteComponentProps {
-  routes: AppRoutes;
+  routesMap: AppRouteMapped[];
   setNavigate: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -20,11 +20,13 @@ class Prefetcher extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
+    const { route } = matchRoute(this.props.routesMap, this.props.location);
+
     this.state = {
+      route,
       location: this.props.location,
       nextLocation: this.props.location,
       needPrefetch: false,
-      route: matchRoute(props.routes, this.props.location),
     };
   }
 
@@ -63,8 +65,8 @@ class Prefetcher extends Component<Props, State> {
   }
 
   fetchRoute(nextLocation: Location) {
-    const { routes, setNavigate } = this.props;
-    const route = matchRoute(routes, nextLocation);
+    const { setNavigate, routesMap } = this.props;
+    const { route, match } = matchRoute(routesMap, nextLocation);
 
     setNavigate(true);
 
@@ -73,7 +75,7 @@ class Prefetcher extends Component<Props, State> {
     ];
 
     if (route.fetch) {
-      promises.push(...route.fetch());
+      promises.push(...route.fetch(match));
     }
 
     Promise
@@ -98,10 +100,10 @@ class Prefetcher extends Component<Props, State> {
   }
 
   render() {
-    const { route } = this.state;
+    const { route, location } = this.state;
 
     return (
-      <Switch location={this.state.location}>
+      <Switch location={location}>
         <Route
           path={route.path}
           exact={route.exact}

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import routes from 'routes';
+import { routesMap } from 'routes';
 
 import { ErrorResponseBoundry, Prefetcher, LoaderNavigate } from 'components';
 
@@ -12,7 +12,7 @@ export default function Router() {
       <ErrorResponseBoundry>
         <LoaderNavigate inProgress={inProgress} />
 
-        <Prefetcher routes={routes} setNavigate={setNavigate} />
+        <Prefetcher routesMap={routesMap} setNavigate={setNavigate} />
       </ErrorResponseBoundry>
     </BrowserRouter>
   );

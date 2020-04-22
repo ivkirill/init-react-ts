@@ -1,14 +1,17 @@
 import {
   APIQueryParams,
   APIRequestPromise,
-  APIResponse,
   APIRequestConfig,
   APIError,
   APIRequestParams,
   Dictionary,
   ModelId,
+  APIResponse,
+  APIResponseList,
 } from 'interfaces';
 import { API_HEADERS, API_SERVER } from 'consts';
+
+type RequestType = 'list';
 
 function getQuery(params: Dictionary<string> = {}): string {
   // TODO: add tests
@@ -36,7 +39,7 @@ class API {
     this.pending = new Map();
   }
 
-  makeRequest(requestParams: APIRequestParams): APIRequestPromise<any> {
+  makeRequest(requestParams: APIRequestParams, type?: RequestType): APIRequestPromise<APIResponse> {
     const { method, url = '', data = {}, config = {} } = requestParams;
 
     const currentQuery = [
@@ -47,7 +50,7 @@ class API {
     ].join('-');
 
     if (this.pending.has(currentQuery)) {
-      return <APIRequestPromise<APIRequestParams>>this.pending.get(currentQuery);
+      return <APIRequestPromise<APIResponse>>this.pending.get(currentQuery);
     }
 
     // url:string, data: Dictionary<string>, config: APIRequestConfig
@@ -64,12 +67,15 @@ class API {
         headers: new Headers(API_HEADERS),
         // body: JSON.stringify(data),
       })
-
-      .then(response => response.json())
-      .then<APIRequestParams>((response: APIResponse) => {
+      .then<APIResponse>(response => response.json())
+      .then((response: APIResponse) => {
         this.pending.delete(currentQuery);
 
-        return response.results;
+        if (type === 'list') {
+          return <APIResponseList>response.results;
+        }
+
+        return response;
       })
       .catch((response: APIError) => {
         this.pending.delete(currentQuery);
@@ -95,8 +101,8 @@ class API {
     return this.makeRequest({ method: 'get', url: `${url}${`${id}` ? `/${id}` : ''}${getQuery(params)}` });
   }
 
-  list(url: string, params: APIQueryParams = {}): APIRequestPromise<[]> {
-    return this.makeRequest({ method: 'get', url: url, data: params });
+  list(url: string, params: APIQueryParams = {}): APIRequestPromise {
+    return this.makeRequest({ method: 'get', url: url, data: params }, 'list');
   }
 
   post(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {

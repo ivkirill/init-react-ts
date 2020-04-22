@@ -1,20 +1,26 @@
 import { ComponentType } from 'react';
-import { RouteComponentProps } from 'react-router-dom';
+import { RouteComponentProps, match } from 'react-router-dom';
 
 import { routeNames } from 'consts';
-import { StrictDictionary } from 'interfaces';
+import { StrictDictionary, Dictionary } from 'interfaces';
 
 import home from './home';
 import products from './products';
+import product from './productPage';
 import notFound from './notFound';
+
+export type MatchProps = match<Dictionary> | null;
 
 export interface AppRoute {
   module: () => Promise<any>;
-  fetch?: () => Promise<any>[];
-  component?: ComponentType<RouteComponentProps<any>> | React.ComponentType<any>;
+  fetch?: (match: MatchProps) => Promise<any>[];
+  component?: ComponentType<RouteComponentProps>;
   exact?: boolean;
   path: string;
-  caption?: () => string;
+}
+
+export interface AppRouteMapped extends AppRoute {
+  id: routeNames;
 }
 
 export type AppRoutes = StrictDictionary<routeNames, AppRoute>;
@@ -22,26 +28,32 @@ export type AppRoutes = StrictDictionary<routeNames, AppRoute>;
 const routes: AppRoutes = {
   // Home
   [routeNames.home]: {
-    ...home,
-    exact: true,
     path: '/',
-    caption: () => 'Home',
+    exact: true,
+    ...home,
   },
+
+  // Product Page
+  [routeNames.product]: {
+    path: '/products/:id',
+    exact: true,
+    ...product,
+  },
+
   // Products
   [routeNames.products]: {
-    ...products,
-    exact: true,
     path: '/products/',
-    caption: () => 'Products',
+    exact: true,
+    ...products,
   },
 
   // 404
   [routeNames.notFound]: {
-    ...notFound,
     path: '*',
+    ...notFound,
   },
 };
 
-// const routes = prepareRoutes(routesChunks, meta);
+const routesMap: AppRouteMapped[] = Object.values(routeNames).map(id => ({ ...routes[id], id }));
 
-export { routes };
+export { routes, routesMap };

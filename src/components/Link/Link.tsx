@@ -1,8 +1,9 @@
 import React, { MouseEvent, PureComponent, ReactNode } from 'react';
-import { RouteComponentProps, NavLink, withRouter, match } from 'react-router-dom';
+import { RouteComponentProps, NavLink, withRouter, match, generatePath } from 'react-router-dom';
 import { Location } from 'history';
-
 import cn from 'classnames';
+
+import { Dictionary } from 'interfaces';
 
 interface Props extends RouteComponentProps {
   activeClassName?: string;
@@ -10,6 +11,7 @@ interface Props extends RouteComponentProps {
   className?: string;
   onClick?: (event: MouseEvent) => any;
   to: string;
+  params?: Dictionary<string>;
   useRouter?: boolean;
   exact?: boolean;
   isActive?: (match: match, location: Location ) => boolean;
@@ -25,12 +27,15 @@ class Link extends PureComponent<Props> {
     const { match, location } = this.props;
 
     if (useRouter) {
+      const { params = {} } = this.props;
+      const href = generatePath(to, params);
+
       return (
         <NavLink
           activeClassName={activeClassName}
           className={className}
           onClick={onClick}
-          to={to}
+          to={href}
           exact={exact}
           isActive={isActive}
         >

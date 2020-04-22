@@ -1,11 +1,13 @@
 import React, { PureComponent, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { RowProps } from 'components';
+import { RowProps, Link } from 'components';
 
 import { Product } from 'entities';
 import { EntityStore } from 'stores';
 import { ProductColType } from 'types';
+import { routes } from 'routes';
+import { routeNames } from 'consts';
 
 type ProductRowType = Record<ProductColType, ReactNode>;
 
@@ -20,13 +22,15 @@ class RowProduct<T> extends PureComponent<Props & T> {
   getRow = (): ProductRowType => {
     const { id, ProductStore } = this.props;
 
-    const product = ProductStore.items[id];
+    const { objectId, displayName, createdAt, updatedAt } = ProductStore.items[id];
+    const href = routes[routeNames.product].path;
+    const params = { id: objectId };
 
     return {
-      id: product.objectId,
-      name: product.displayName,
-      created: new Date(product.createdAt).toLocaleString(),
-      updated: new Date(product.updatedAt).toLocaleString(),
+      id: <Link to={href} params={params}>{objectId}</Link>,
+      name: displayName,
+      created: new Date(createdAt).toLocaleString(),
+      updated: new Date(updatedAt).toLocaleString(),
     };
   }
 

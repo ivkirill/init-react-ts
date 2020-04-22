@@ -1,9 +1,7 @@
 import { Dictionary } from 'interfaces';
 
-export type APIResponse = {
-  results: any;
-};
 export type APIRequestConfig = Partial<Request>;
+
 export type APIError = {
   error: string;
 };
@@ -39,7 +37,10 @@ export interface APIResponseMeta {
   url: string | null;
 }
 
-export interface APIResponseList<T> {
-  meta: APIResponseMeta;
-  objects: T[];
-}
+export type APIResponseItem = Dictionary;
+
+export type APIResponseList = {
+  results: Dictionary[];
+};
+
+export type APIResponse = APIResponseItem | APIResponseList;
