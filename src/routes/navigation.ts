@@ -1,4 +1,3 @@
-
 import { match } from 'react-router-dom';
 import { Location } from 'history';
 
@@ -8,7 +7,7 @@ import { routes, AppRoute } from './routes';
 
 export interface RouteCaption extends AppRoute {
   caption?: () => string;
-  isActive?: (match: match, location: Location ) => boolean;
+  isActive?: (match: match, location: Location) => boolean;
 }
 
 const captions: Partial<StrictDictionary<routeNames, Partial<RouteCaption>>> = {
@@ -22,10 +21,10 @@ const captions: Partial<StrictDictionary<routeNames, Partial<RouteCaption>>> = {
 
       return pathname.includes(routeNames.products);
     },
-  }
-}
+  },
+};
 
-export const navMain = ROUTES_MAIN_MENU.map(name => ({
+export const navMain = ROUTES_MAIN_MENU.map((name) => ({
   ...routes[name],
   ...captions[name],
 }));

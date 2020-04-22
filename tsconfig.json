@@ -28,14 +28,14 @@
       "stores/*": ["stores/*"],
       "consts": ["consts"],
       "consts/*": ["consts/*"],
-      "types": ["types"],
-      "types/*": ["types/*"],
       "entities": ["types/entities"],
       "entities/*": ["types/entities/*"],
       "structs": ["structs"],
       "structs/*": ["structs/*"],
       "interfaces": ["types/interfaces"],
       "interfaces/*": ["types/interfaces/*"],
+      "types": ["types"],
+      "types/*": ["types/*"],
       "src/*": ["*"]
     }
   },

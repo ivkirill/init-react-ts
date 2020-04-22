@@ -15,7 +15,9 @@ type RequestType = 'list';
 
 function getQuery(params: Dictionary<string> = {}): string {
   // TODO: add tests
-  return Object.entries(params).flatMap(key => key.join('=')).join('&');
+  return Object.entries(params)
+    .flatMap((key) => key.join('='))
+    .join('&');
 }
 
 class API {
@@ -40,34 +42,27 @@ class API {
   }
 
   makeRequest(requestParams: APIRequestParams, type?: RequestType): APIRequestPromise<APIResponse> {
-    const { method, url = '', data = {}, config = {} } = requestParams;
+    const { method, url = '', data, config } = requestParams;
 
-    const currentQuery = [
-      method,
-      url,
-      JSON.stringify(data),
-      JSON.stringify(config),
-    ].join('-');
+    const currentQuery = [method, url, JSON.stringify(data), JSON.stringify(config)].join('-');
 
     if (this.pending.has(currentQuery)) {
       return <APIRequestPromise<APIResponse>>this.pending.get(currentQuery);
     }
 
-    // url:string, data: Dictionary<string>, config: APIRequestConfig
-    // let request;
-    // if (method === 'post' || method === 'put' || method === 'patch') {
-    //   requestMethod = (requestUrl, data, config) => this.request[method];
-    // }
-    // else {
-    //   requestMethod = (requestUrl, config) => this.request[method];
-    // }
+    const options: RequestInit = {
+      method,
+      headers: new Headers(API_HEADERS),
+    };
 
-    const promise = fetch(`${API_SERVER}${url}`, {
-        method,
-        headers: new Headers(API_HEADERS),
-        // body: JSON.stringify(data),
-      })
-      .then<APIResponse>(response => response.json())
+    console.log(requestParams);
+
+    if (config) {
+      options.body = JSON.stringify(config);
+    }
+
+    const promise = fetch(`${API_SERVER}${url}`, options)
+      .then<APIResponse>((response) => response.json())
       .then((response: APIResponse) => {
         this.pending.delete(currentQuery);
 
@@ -110,7 +105,7 @@ class API {
   }
 
   patch(url: string, data: Dictionary, id: ModelId): APIRequestPromise {
-    return this.makeRequest({ method: 'patch', url: `${url}${id ? `/${id}` : ''}`, data: data });
+    return this.makeRequest({ method: 'put', url: `${url}${id ? `/${id}` : ''}`, config: data });
   }
 
   delete(url: string, id: ModelId): APIRequestPromise {

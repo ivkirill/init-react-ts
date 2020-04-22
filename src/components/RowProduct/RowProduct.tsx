@@ -22,17 +22,22 @@ class RowProduct<T> extends PureComponent<Props & T> {
   getRow = (): ProductRowType => {
     const { id, ProductStore } = this.props;
 
-    const { objectId, displayName, createdAt, updatedAt } = ProductStore.items[id];
+    const { objectId, displayName, createdAt, updatedAt, stock } = ProductStore.items[id];
     const href = routes[routeNames.product].path;
     const params = { id: objectId };
 
     return {
-      id: <Link to={href} params={params}>{objectId}</Link>,
+      id: (
+        <Link to={href} params={params}>
+          {objectId}
+        </Link>
+      ),
       name: displayName,
+      stock,
       created: new Date(createdAt).toLocaleString(),
       updated: new Date(updatedAt).toLocaleString(),
     };
-  }
+  };
 
   render() {
     const { className, cols } = this.props;
@@ -43,7 +48,11 @@ class RowProduct<T> extends PureComponent<Props & T> {
         {cols.map((name, i) => {
           const key = `order-cell-${i}`;
 
-          return <span data-name={name} key={key}>{row[name]}</span>;
+          return (
+            <span data-name={name} key={key}>
+              {row[name]}
+            </span>
+          );
         })}
       </div>
     );

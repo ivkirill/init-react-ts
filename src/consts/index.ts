@@ -1,4 +1,5 @@
 export * from './api';
+export * from './fields';
 export { default as routeNames } from './routeNames';
 
 export { ROUTES_MAIN_MENU } from './navigation';

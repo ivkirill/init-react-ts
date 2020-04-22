@@ -71,18 +71,23 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hook-form": "^5.5.3",
     "react-router-dom": "^5.1.2"
+  },
+  "precommit": [
+    "precommit"
+  ],
+  "lint-staged": {
+    "*.{js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue}": [
+      "eslint --fix",
+      "prettier --write",
+      "jest --findRelatedTests",
+      "git add"
+    ]
   },
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack.dev.js --progress --colors --hot --mode=development",
-    "build": "webpack --hide-modules --config ./configs/webpack.prod.js"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{ts,tsx,scss,js,css,md}": "prettier --write"
+    "build": "webpack --hide-modules --config ./configs/webpack.prod.js",
+    "precommit": "lint-staged"
   }
 }
