@@ -102,7 +102,8 @@
     ]
   },
   "eslintIgnore": [
-    "dist"
+    "dist",
+    "node_modules"
   ],
   "lint-staged": {
     "*.{js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue}": [
