@@ -20,12 +20,13 @@ class Prefetcher extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    const { route } = matchRoute(this.props.routesMap, this.props.location);
+    const { routesMap, location } = this.props;
+    const { route } = matchRoute(routesMap, location);
 
     this.state = {
       route,
-      location: this.props.location,
-      nextLocation: this.props.location,
+      location,
+      nextLocation: location,
       needPrefetch: false,
     };
   }

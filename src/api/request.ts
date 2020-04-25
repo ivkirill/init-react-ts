@@ -23,7 +23,7 @@ function getQuery(params: Dictionary<string> = {}): string {
 class API {
   instance: API;
   exists: boolean;
-  pending: Map<string, APIRequestPromise>;
+  pending: Map<string, APIRequestPromise<APIResponse>>;
 
   constructor() {
     if (this.exists) {
@@ -47,15 +47,13 @@ class API {
     const currentQuery = [method, url, JSON.stringify(data), JSON.stringify(config)].join('-');
 
     if (this.pending.has(currentQuery)) {
-      return <APIRequestPromise<APIResponse>>this.pending.get(currentQuery);
+      return this.pending.get(currentQuery) as APIRequestPromise<APIResponse>;
     }
 
     const options: RequestInit = {
       method,
       headers: new Headers(API_HEADERS),
     };
-
-    console.log(requestParams);
 
     if (config) {
       options.body = JSON.stringify(config);
@@ -67,7 +65,7 @@ class API {
         this.pending.delete(currentQuery);
 
         if (type === 'list') {
-          return <APIResponseList>response.results;
+          return response.results as APIResponseList;
         }
 
         return response;
@@ -89,7 +87,7 @@ class API {
   }
 
   create(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'post', url: url, data: data, config: config });
+    return this.makeRequest({ method: 'post', url, data, config });
   }
 
   get(url: string, id?: ModelId, params: APIQueryParams = {}): APIRequestPromise {
@@ -97,11 +95,11 @@ class API {
   }
 
   list(url: string, params: APIQueryParams = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'get', url: url, data: params }, 'list');
+    return this.makeRequest({ method: 'get', url, data: params }, 'list');
   }
 
   post(url: string, data: Dictionary, config: APIRequestConfig = {}): APIRequestPromise {
-    return this.makeRequest({ method: 'post', url: url, data: data, config: config });
+    return this.makeRequest({ method: 'post', url, data, config });
   }
 
   patch(url: string, data: Dictionary, id: ModelId): APIRequestPromise {

@@ -6,7 +6,7 @@ export type APIError = {
   error: string;
 };
 
-export interface APIRequestPromise<T = Dictionary> extends Promise<T> {}
+export type APIRequestPromise<T = Dictionary> = Promise<T>
 
 export type APIMethod = 'get' | 'delete' | 'post' | 'put' | 'patch';
 

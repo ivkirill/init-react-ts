@@ -22,7 +22,7 @@ const headers = PRODUCT_TABLE_COLS_MAP.map((name: string) => ({
 class ProductsPage extends PureComponent<Props> {
   render() {
     const { ProductStore } = this.props;
-    const ids = ProductStore.lists['all'];
+    const ids = ProductStore.lists.all;
 
     return (
       <Layout className={s.root}>

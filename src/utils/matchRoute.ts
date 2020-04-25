@@ -13,7 +13,7 @@ const defaultRoute = routes[routeNames.notFound];
 export function matchRoute(routesMap: AppRouteMapped[], location: Location): MatchRoute {
   let match = null;
 
-  const matchRoute = routesMap.find((route) => {
+  const matched = routesMap.find((route) => {
     match = matchPath(location.pathname, {
       path: route.path,
       exact: route.exact,
@@ -24,6 +24,6 @@ export function matchRoute(routesMap: AppRouteMapped[], location: Location): Mat
 
   return {
     match,
-    route: matchRoute || defaultRoute,
+    route: matched || defaultRoute,
   };
 }

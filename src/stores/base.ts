@@ -58,7 +58,7 @@ export default class EntityStore<T extends BaseModel> {
    */
   @observable metas: Dictionary<APIResponseMeta> = {};
 
-  @observable fetching: boolean = false;
+  @observable fetching = false;
 
   async fetchList(params: APIQueryListParams = {}): Promise<Dictionary<T>> {
     const { listName = 'all' } = params;
@@ -70,7 +70,7 @@ export default class EntityStore<T extends BaseModel> {
     const list: Array<ModelId> = [];
 
     this.items = response.reduce((items: Dictionary<T>, responseItem: T) => {
-      const item = <BaseModelClass & T>this.entity.getStructInstance(responseItem);
+      const item = this.entity.getStructInstance(responseItem) as BaseModelClass & T;
       const { objectId } = item;
 
       if (objectId) {
@@ -92,7 +92,7 @@ export default class EntityStore<T extends BaseModel> {
   async fetchItem(id: ModelId): Promise<T> {
     this.fetching = true;
 
-    const item = <T>this.entity.getStructInstance(await this.api.get(id));
+    const item = this.entity.getStructInstance(await this.api.get(id)) as T;
 
     this.items[id] = item;
     this.item = this.items[id];
@@ -106,7 +106,7 @@ export default class EntityStore<T extends BaseModel> {
 
     this.fetching = true;
 
-    const item = <T>this.entity.getInstance(await this.api.patch(id, params));
+    const item = this.entity.getInstance(await this.api.patch(id, params)) as T;
 
     this.items[id] = item;
     this.item = this.items[id];

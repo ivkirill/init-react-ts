@@ -6,7 +6,7 @@ import { observer } from 'mobx-react';
 import s from './ErrorGlobalBoundry.scss';
 
 class ErrorGlobalBoundry extends Component {
-  @observable hasErrors: boolean = false;
+  @observable hasErrors = false;
 
   componentDidMount() {
     // handleErrors();

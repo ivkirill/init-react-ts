@@ -1,4 +1,4 @@
-type EnumType = { [s: number]: string };
+export type EnumType = { [s: number]: string };
 
 export function mapEnum(enumerable: EnumType): string[] {
   const values: string[] = [];

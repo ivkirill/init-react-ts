@@ -4,13 +4,13 @@ import { BaseStruct } from 'structs';
 
 export class Error extends BaseStruct {
   reason: string; // reason @0
-  status_code: number; // statusCode @1
+  statusCode: number; // statusCode @1
 
-  protected static __class: string = 'Error';
+  protected static __class = 'Error';
 
   static propTypes: Dictionary = {
     reason: PropTypes.string,
-    status_code: PropTypes.number,
+    statusCode: PropTypes.number,
   };
 }
 
@@ -18,7 +18,7 @@ export class FieldError extends BaseStruct {
   reason: string; // reason @0
   field: string; // field @1
 
-  protected static __class: string = 'FieldError';
+  protected static __class = 'FieldError';
 
   static propTypes: Dictionary = {
     reason: PropTypes.string,
@@ -28,35 +28,35 @@ export class FieldError extends BaseStruct {
 
 export class CommonError extends BaseStruct {
   reason: string; // reason @0
-  status_code: number; // statusCode @1
+  statusCode: number; // statusCode @1
   type: string; // type @2
   message: string; // message @3
 
-  protected static __class: string = 'CommonError';
+  protected static __class = 'CommonError';
 
   static propTypes: Dictionary = {
     reason: PropTypes.string,
-    status_code: PropTypes.number,
+    statusCode: PropTypes.number,
     type: PropTypes.string,
     message: PropTypes.string,
   };
 }
 
 export class ErrorResponse extends BaseStruct {
-  status_code: number; // statusCode @0
-  field_errors?: FieldError[]; // fieldErrors @1
+  statusCode: number; // statusCode @0
+  fieldErrors?: FieldError[]; // fieldErrors @1
   error?: CommonError; // error @2
 
-  protected static __class: string = 'ErrorResponse';
+  protected static __class = 'ErrorResponse';
 
   static propTypes: Dictionary = {
-    status_code: PropTypes.number,
-    field_errors: PropTypes.arrayOf(PropTypes.object),
+    statusCode: PropTypes.number,
+    fieldErrors: PropTypes.arrayOf(PropTypes.object),
     error: PropTypes.object,
   };
 
   static objectTypes: Dictionary = {
-    field_errors: FieldError,
+    fieldErrors: FieldError,
     error: CommonError,
   };
 }

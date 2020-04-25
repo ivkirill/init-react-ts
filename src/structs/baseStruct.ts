@@ -1,6 +1,7 @@
 import propTypes from 'prop-types';
 import { Dictionary, StructPropTypes } from 'interfaces';
 
+/* eslint-disable react/forbid-foreign-prop-types */
 export default class BaseStruct {
   static propTypes: StructPropTypes = {};
   static objectTypes: Dictionary<typeof BaseStruct> = {};
@@ -61,7 +62,7 @@ export default class BaseStruct {
       throw error;
     }
 
-    Object.keys(props).map((propName: string) => {
+    Object.keys(props).forEach((propName: string) => {
       if (this.propTypes[propName] === undefined) {
         console.warn(`${this.name} does not have property ${propName}`);
       }
@@ -84,18 +85,18 @@ export default class BaseStruct {
    * @returns {(Error | null)}
    */
   static checkPropTypes(props: Dictionary<string>): Error | null {
-    for (const propName in this.propTypes) {
-      if (!this.propTypes.hasOwnProperty(propName)) {
-        continue;
+    Object.keys(this.propTypes).forEach((propName: string) => {
+      if (!Object.prototype.hasOwnProperty.call(this.propTypes, propName)) {
+        return;
       }
 
       try {
         propTypes.checkPropTypes(this.propTypes, props, propName, this.name);
       }
       catch (e) {
-        return e;
+        console.warn(e);
       }
-    }
+    });
 
     return null;
   }

@@ -6,5 +6,5 @@ declare global {
     DEV: Dictionary;
   }
 
-  export const __DEV__: string;
+  export const DEV: string;
 }

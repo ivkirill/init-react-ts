@@ -61,7 +61,7 @@ module.exports = {
       filename: 'bundle.css',
     }),
     new Webpack.DefinePlugin({
-      __DEV__: false,
+      DEV: false,
     }),
   ],
 };

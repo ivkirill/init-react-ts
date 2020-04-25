@@ -1,13 +1,13 @@
 import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Layout, Form, Select } from 'components';
+import { Layout, Form, Select , Input } from 'components';
 
 import { EntityStore } from 'stores';
 import { Product } from 'entities';
 
-import s from './ProductPage.scss';
 import { Dictionary } from 'interfaces';
-import { Input } from 'components';
+import s from './ProductPage.scss';
+
 
 interface Props {
   ProductStore: EntityStore<Product>;
@@ -20,7 +20,8 @@ class ProductsPage extends PureComponent<Props> {
     const { ProductStore } = this.props;
     const { objectId } = ProductStore.item;
 
-    return await ProductStore.update(objectId, { ...values });
+    const updated = await ProductStore.update(objectId, { ...values });
+    return updated;
   };
 
   render() {

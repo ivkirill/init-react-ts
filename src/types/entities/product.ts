@@ -17,3 +17,5 @@ export class Product extends BaseModel {
     createdAt: PropTypes.string,
   };
 }
+
+export type ProductModel = typeof Product;

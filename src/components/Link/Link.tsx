@@ -1,5 +1,5 @@
 import React, { MouseEvent, PureComponent, ReactNode } from 'react';
-import { RouteComponentProps, NavLink, withRouter, match, generatePath } from 'react-router-dom';
+import { RouteComponentProps, NavLink, withRouter, match as Match, generatePath } from 'react-router-dom';
 import { Location } from 'history';
 import cn from 'classnames';
 
@@ -14,7 +14,7 @@ interface Props extends RouteComponentProps {
   params?: Dictionary<string>;
   useRouter?: boolean;
   exact?: boolean;
-  isActive?: (match: match, location: Location ) => boolean;
+  isActive?: (match: Match, location: Location ) => boolean;
 }
 
 /**
@@ -23,8 +23,10 @@ interface Props extends RouteComponentProps {
  */
 class Link extends PureComponent<Props> {
   render() {
-    const { activeClassName, children, className, onClick, to, useRouter = true, isActive, exact = true } = this.props;
-    const { match, location } = this.props;
+    const {
+      activeClassName, children, className, onClick, to, useRouter = true, isActive, exact = true,
+      match, location,
+    } = this.props;
 
     if (useRouter) {
       const { params = {} } = this.props;
