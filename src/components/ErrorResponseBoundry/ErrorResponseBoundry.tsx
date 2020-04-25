@@ -6,8 +6,8 @@ import { observer } from 'mobx-react';
 import s from './ErrorResponseBoundry.scss';
 
 class ErrorResponseBoundry extends Component<RouteComponentProps> {
-  @observable hasErrors: boolean = false;
-  @observable errorMessage: string = '';
+  @observable hasErrors = false;
+  @observable errorMessage = '';
   error: any;
 
   componentDidMount() {
@@ -24,20 +24,39 @@ class ErrorResponseBoundry extends Component<RouteComponentProps> {
     // sendError(error, errorInfo);
   }
 
-  render() {
-    if (this.hasErrors || this.props.match && this.props.match.path === '*') {
-      return (
-        <div className={s.root}>
-          {this.message()}
-        </div>
-      );
-    }
+  redirectToLogin = () => {
+    const { history } = this.props;
 
-    const { children } = this.props;
-    return children;
+    setTimeout(
+    () => {
+      const location = encodeURIComponent(window.location.pathname);
+
+      if (history) {
+        history.push(`/login?next=${location}`);
+      }
+
+      window.location.reload();
+    },
+    5000);
   }
 
-  message = () => {
+  redirectToMain = () => {
+    const { history } = this.props;
+
+    setTimeout(
+    () => {
+      if (history) {
+        history.push('/');
+      }
+
+      window.location.reload();
+    },
+    5000);
+  }
+
+  renderMessage = () => {
+    const { match } = this.props;
+
     if (this.errorMessage.includes('Network Error')) {
       return (
         <>
@@ -46,6 +65,7 @@ class ErrorResponseBoundry extends Component<RouteComponentProps> {
         </>
       );
     }
+
     if (this.errorMessage.includes('403')) {
       this.redirectToLogin();
 
@@ -56,7 +76,8 @@ class ErrorResponseBoundry extends Component<RouteComponentProps> {
         </>
       );
     }
-    if (this.errorMessage.includes('404') || this.props.match.path === '*') {
+
+    if (this.errorMessage.includes('404') || match.path === '*') {
       return (
         <>
           <p>Page not found</p>
@@ -74,23 +95,19 @@ class ErrorResponseBoundry extends Component<RouteComponentProps> {
     );
   }
 
-  redirectToLogin = () => {
-    setTimeout(
-    () => {
-      const location = encodeURIComponent(window.location.pathname);
-      this.props.history && this.props.history.push(`/login?next=${location}`);
-      window.location.reload();
-    },
-    5000);
-  }
+  render() {
+    const { match } = this.props;
 
-  redirectToMain = () => {
-    setTimeout(
-    () => {
-      this.props.history && this.props.history.push('/');
-      window.location.reload();
-    },
-    5000);
+    if (this.hasErrors || match && match.path === '*') {
+      return (
+        <div className={s.root}>
+          {this.renderMessage()}
+        </div>
+      );
+    }
+
+    const { children } = this.props;
+    return children;
   }
 }
 export default withRouter(observer(ErrorResponseBoundry));

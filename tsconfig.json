@@ -43,6 +43,9 @@
     "es2017",
     "dom"
   ],
+  "types": [
+    "history"
+  ],
   "include": [
     "src/**/*"
   ],

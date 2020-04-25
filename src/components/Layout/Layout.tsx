@@ -11,6 +11,8 @@ interface Props {
 
 class Layout extends PureComponent<Props> {
   render() {
+    const { children } = this.props;
+
     return (
       <div className={s.root}>
         <div className={s.navigation}>
@@ -20,7 +22,7 @@ class Layout extends PureComponent<Props> {
         </div>
 
         <div className={s.content}>
-          {this.props.children}
+          {children}
         </div>
       </div>
     );

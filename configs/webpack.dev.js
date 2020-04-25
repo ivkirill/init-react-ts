@@ -49,7 +49,7 @@ module.exports = {
   },
   plugins: [
     new Webpack.DefinePlugin({
-      __DEV__: true,
+      DEV: true,
     }),
     new HtmlWebpackPlugin({ inject: true, template: path.join(PATH_SRC, 'index.html') })
   ]

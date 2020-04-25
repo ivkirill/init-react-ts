@@ -2,7 +2,9 @@ import { APIRequestPromise, APIQueryParams, Dictionary, ModelId } from 'interfac
 import { request } from 'api';
 
 export default class API {
-  constructor(readonly pathname: string) {}
+  constructor(readonly pathname: string) {
+    this.pathname = pathname;
+  }
 
   list(params?: APIQueryParams): APIRequestPromise {
     return request.list(this.pathname, params);

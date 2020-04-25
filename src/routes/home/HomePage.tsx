@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Layout } from 'components';
 
 import s from './HomePage.scss';
 
-class HomePage extends Component {
-  render() {
-    return (
-      <Layout className={s.root}>
-        HomePage
-      </Layout>
-    );
-  }
+function HomePage() {
+  return (
+    <Layout className={s.root}>
+      HomePage
+    </Layout>
+  );
 }
 
 export default HomePage;
