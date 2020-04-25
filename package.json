@@ -5,35 +5,48 @@
   "author": "Kirill Ivanov",
   "license": "MIT",
   "main": "dist/app.bundle.js",
-  "types": "src/types/index.d.ts",
   "globals": {
     "__DEV__": true
   },
   "devDependencies": {
-    "@babel/core": "^7.8.4",
+    "@babel/core": "^7.9.0",
     "@babel/plugin-proposal-class-properties": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-proposal-object-rest-spread": "^7.9.5",
     "@babel/plugin-transform-runtime": "^7.9.0",
-    "@babel/preset-env": "^7.8.7",
-    "@babel/preset-react": "^7.8.3",
-    "@babel/preset-typescript": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
     "@babel/runtime": "^7.9.2",
     "@types/classnames": "^2.2.10",
-    "@types/prop-types": "^15.7.3",
-    "@types/react": "^16.9.23",
-    "@types/react-dom": "^16.9.5",
-    "@types/react-router-dom": "^5.1.3",
     "@types/isomorphic-fetch": "^0.0.35",
+    "@types/prop-types": "^15.7.3",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
+    "@types/react-router-dom": "^5.1.4",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
     "autoprefixer": "^9.7.6",
     "awesome-typescript-loader": "^5.2.1",
     "babel-core": "^6.26.3",
-    "babel-loader": "^8.0.6",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.1.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "css-loader": "^3.4.2",
-    "html-webpack-plugin": "3.2.0",
-    "husky": ">=4",
-    "lint-staged": ">=10",
+    "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb": "^18.1.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-react-app": "^5.2.1",
+    "eslint-plugin-flowtype": "^4.7.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.3",
+    "eslint-plugin-react": "^7.19.0",
+    "eslint-plugin-react-hooks": "^3.0.0",
+    "git-branch-is": "^3.1.0",
+    "html-webpack-plugin": "4.2.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.7",
     "mini-css-extract-plugin": "^0.9.0",
     "pixrem": "^5.0.0",
     "pleeease-filters": "^4.0.0",
@@ -51,31 +64,45 @@
     "postcss-prepend-imports": "^1.0.1",
     "postcss-selector-matches": "^4.0.0",
     "postcss-selector-not": "^4.0.0",
-    "prettier": "2.0.5",
+    "prettier": "^2.0.5",
     "sass-loader": "^8.0.2",
     "simple-progress-webpack-plugin": "^1.1.2",
-    "style-loader": "^1.1.3",
-    "tslint": "^6.1.0",
-    "tslint-config-airbnb": "^5.11.2",
-    "tslint-loader": "^3.5.4",
+    "style-loader": "^1.2.0",
     "typescript": "^3.8.3",
-    "webpack": "^4.42.0",
+    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
     "classnames": "^2.2.6",
     "mobx": "^5.15.4",
-    "mobx-react": "^6.1.8",
-    "node-sass": "^4.13.1",
+    "mobx-react": "^6.2.2",
+    "node-sass": "^4.14.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^5.5.3",
     "react-router-dom": "^5.1.2"
   },
-  "precommit": [
-    "precommit"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "prettier": "./configs/prettier.config.js",
+  "eslintConfig": {
+    "extends": [
+      "./configs/eslint.config.js"
+    ]
+  },
+  "eslintIgnore": [
+    "dist"
   ],
   "lint-staged": {
     "*.{js|md|ts|css|sass|less|graphql|yml|yaml|scss|json|vue}": [
@@ -85,9 +112,16 @@
       "git add"
     ]
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn precommit",
+      "pre-push": "git-branch-is -r \"^DEV-\\d+$\""
+    }
+  },
   "scripts": {
     "start": "webpack-dev-server --config ./configs/webpack.dev.js --progress --colors --hot --mode=development",
     "build": "webpack --hide-modules --config ./configs/webpack.prod.js",
+    "lint": "eslint src --ext .js,.jsx,.ts,.tsx",
     "precommit": "lint-staged"
   }
 }

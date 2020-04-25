@@ -26,12 +26,6 @@ exports.resolve = {
 
 exports.rules = [
   {
-    enforce: 'pre',
-    test: /\.tsx?$/,
-    exclude: /(node_modules)/,
-    loader: 'tslint-loader',
-  },
-  {
     test: /\.tsx?$/,
     exclude: /(node_modules)/,
     rules: [
