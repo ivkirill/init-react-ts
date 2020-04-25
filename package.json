@@ -114,8 +114,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn precommit",
-      "pre-push": "git-branch-is -r \"^DEV-\\d+$\""
+      "pre-commit": "yarn precommit"
     }
   },
   "scripts": {
