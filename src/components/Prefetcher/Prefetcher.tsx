@@ -6,7 +6,7 @@ import { matchRoute, isEqualObjects } from 'utils';
 
 interface Props extends RouteComponentProps {
   routesMap: AppRouteMapped[];
-  setNavigate: Dispatch<SetStateAction<boolean>>;
+  setProgress: Dispatch<SetStateAction<boolean>>;
 }
 
 interface State {
@@ -65,10 +65,10 @@ class Prefetcher extends Component<Props, State> {
   }
 
   fetchRoute(nextLocation: Location) {
-    const { setNavigate, routesMap } = this.props;
+    const { setProgress, routesMap } = this.props;
     const { route, match } = matchRoute(routesMap, nextLocation);
 
-    setNavigate(true);
+    setProgress(true);
 
     const promises = [
       route.module(),
@@ -92,7 +92,7 @@ class Prefetcher extends Component<Props, State> {
           needPrefetch: false,
         });
 
-        setNavigate(false);
+        setProgress(false);
       })
       .catch((e: Error) => {
         throw e;

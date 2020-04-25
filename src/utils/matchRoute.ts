@@ -19,7 +19,7 @@ export function matchRoute(routesMap: AppRouteMapped[], location: Location): Mat
       exact: route.exact,
     });
 
-    return match && route.module && route.fetch;
+    return match && route.module;
   });
 
   return {
