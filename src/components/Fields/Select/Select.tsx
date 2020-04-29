@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Field, FieldProps } from 'components';
+import { Field, FieldProps } from '@components';;
 
 import s from './Select.scss';
 

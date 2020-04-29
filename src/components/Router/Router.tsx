@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { routesMap } from '@routes';
 
-import { ErrorResponseBoundry, Prefetcher, LoaderNavigate } from 'components';
+import { ErrorResponseBoundry, Prefetcher, LoaderNavigate } from '@components';;
 
 export default function Router() {
   const [inProgress, setNavigateProgress] = useState(false);

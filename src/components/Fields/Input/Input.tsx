@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import { Field, FieldProps } from 'components';
+import { Field, FieldProps } from '@components';;
 import { FieldInputType } from '@constants';
 
 import s from './Input.scss';

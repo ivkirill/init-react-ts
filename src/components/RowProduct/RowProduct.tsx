@@ -1,7 +1,7 @@
 import React, { PureComponent, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { RowProps, Link } from 'components';
+import { RowProps, Link } from '@components';;
 
 import { Product } from '@entities';
 import { EntityStore } from '@stores';

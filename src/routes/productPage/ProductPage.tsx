@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
-import { Layout, Form, Select , Input } from 'components';
+import { Layout, Form, Select , Input } from '@components';;
 
 import { EntityStore } from '@stores';
 import { Product } from '@entities';

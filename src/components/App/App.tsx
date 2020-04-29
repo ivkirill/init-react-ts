@@ -6,7 +6,7 @@ import stores from '@stores';
 import {
   Router,
   ErrorGlobalBoundry,
-} from 'components';
+} from '@components';;
 
 import s from './App.scss';
 

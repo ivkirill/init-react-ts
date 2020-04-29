@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Link } from 'components';
+import { Link } from '@components';;
 
 import { navMain, RouteCaption } from '@routes';
 

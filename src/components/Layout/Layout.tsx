@@ -1,6 +1,6 @@
 import React, { PureComponent, ReactNode } from 'react';
 
-import { Header, Navigation } from 'components';
+import { Header, Navigation } from '@components';;
 
 import s from './Layout.scss';
 

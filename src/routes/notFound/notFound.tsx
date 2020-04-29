@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigation } from 'components';
+import { Navigation } from '@components';;
 import s from './NotFound.scss';
 
 function NotFound() {
