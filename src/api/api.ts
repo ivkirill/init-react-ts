@@ -1,5 +1,5 @@
-import { APIRequestPromise, APIQueryParams, Dictionary, ModelId } from 'interfaces';
-import { request } from 'api';
+import { APIRequestPromise, APIQueryParams, Dictionary, ModelId } from '@interfaces';
+import { request } from '@api';
 
 export default class API {
   constructor(readonly pathname: string) {

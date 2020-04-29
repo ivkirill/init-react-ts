@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import { Dictionary } from 'interfaces';
-import { BaseStruct } from 'structs';
+import { Dictionary } from '@interfaces';
+import { BaseStruct } from '@structs';
 
 export class Error extends BaseStruct {
   reason: string; // reason @0

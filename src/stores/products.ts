@@ -1,5 +1,5 @@
-import { products } from 'api';
-import { Product } from 'entities';
+import { products } from '@api';
+import { Product } from '@entities';
 import EntityStore from './base';
 
 

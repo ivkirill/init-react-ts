@@ -3,7 +3,7 @@ import { RouteComponentProps, NavLink, withRouter, match as Match, generatePath 
 import { Location } from 'history';
 import cn from 'classnames';
 
-import { Dictionary } from 'interfaces';
+import { Dictionary } from '@interfaces';
 
 interface Props extends RouteComponentProps {
   activeClassName?: string;

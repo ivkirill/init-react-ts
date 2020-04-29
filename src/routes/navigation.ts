@@ -1,8 +1,8 @@
 import { match } from 'react-router-dom';
 import { Location } from 'history';
 
-import { ROUTES_MAIN_MENU, routeNames } from 'consts';
-import { StrictDictionary } from 'interfaces';
+import { ROUTES_MAIN_MENU, routeNames } from '@constants';
+import { StrictDictionary } from '@interfaces';
 import { routes, AppRoute } from './routes';
 
 export interface RouteCaption extends AppRoute {

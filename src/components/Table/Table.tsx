@@ -1,7 +1,7 @@
 import React, { PureComponent, ReactNode, ComponentType } from 'react';
 import cn from 'classnames';
 
-import { ModelId } from 'interfaces';
+import { ModelId } from '@interfaces';
 
 import s from './Table.scss';
 

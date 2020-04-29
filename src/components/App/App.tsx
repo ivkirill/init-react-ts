@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react';
 import { Provider } from 'mobx-react';
 
-import stores from 'stores';
+import stores from '@stores';
 
 import {
   Router,

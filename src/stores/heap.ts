@@ -1,5 +1,5 @@
-// import { BaseModelClass, Dictionary } from 'interfaces';
-// import { BaseModel, BaseStruct } from 'structs';
+// import { BaseModelClass, Dictionary } from '@interfaces';
+// import { BaseModel, BaseStruct } from '@structs';
 // import EntityStore from './base';
 
 // /**

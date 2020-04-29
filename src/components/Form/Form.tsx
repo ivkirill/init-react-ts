@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import cn from 'classnames';
-import { Dictionary } from 'interfaces';
+import { Dictionary } from '@interfaces';
 
 import s from './Form.scss';
 

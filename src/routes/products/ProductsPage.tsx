@@ -2,9 +2,9 @@ import React, { PureComponent } from 'react';
 import { inject, observer } from 'mobx-react';
 import { Layout, Table, RowProduct } from 'components';
 
-import { EntityStore } from 'stores';
-import { Product } from 'entities';
-import { PRODUCT_TABLE_COLS_MAP } from 'consts';
+import { EntityStore } from '@stores';
+import { Product } from '@entities';
+import { PRODUCT_TABLE_COLS_MAP } from '@constants';
 
 import s from './ProductsPage.scss';
 

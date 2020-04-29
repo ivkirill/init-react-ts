@@ -6,10 +6,10 @@ import {
   ModelId,
   Dictionary,
   BaseModelClass,
-} from 'interfaces';
+} from '@interfaces';
 
-import API from 'api';
-import { BaseModel } from 'structs';
+import API from '@api';
+import { BaseModel } from '@structs';
 
 interface Props {
   api: API;

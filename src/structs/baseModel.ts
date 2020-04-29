@@ -1,4 +1,4 @@
-import { ModelId } from 'interfaces';
+import { ModelId } from '@interfaces';
 import BaseStruct from './baseStruct';
 
 export default class BaseModel extends BaseStruct {

@@ -1,5 +1,5 @@
-import { ProductStore } from 'stores';
-import { MatchProps } from 'routes';
+import { ProductStore } from '@stores';
+import { MatchProps } from '@routes';
 
 const ProductPage = () =>
   import(

@@ -1,4 +1,4 @@
-import { mapEnum } from 'utils';
+import { mapEnum } from '@utils';
 
 export enum PRODUCT_TABLE_COLS {
   id,

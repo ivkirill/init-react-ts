@@ -1,6 +1,6 @@
 import React, { ReactElement } from 'react';
 import { RegisterType } from 'components';
-import { FieldType, FieldInputType } from 'consts';
+import { FieldType, FieldInputType } from '@constants';
 
 export interface FieldProps {
   name: string;

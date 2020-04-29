@@ -1,8 +1,8 @@
 import { ComponentType } from 'react';
 import { RouteComponentProps, match } from 'react-router-dom';
 
-import { routeNames } from 'consts';
-import { StrictDictionary, Dictionary } from 'interfaces';
+import { routeNames } from '@constants';
+import { StrictDictionary, Dictionary } from '@interfaces';
 
 import home from './home';
 import products from './products';
