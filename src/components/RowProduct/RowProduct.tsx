@@ -1,13 +1,13 @@
 import React, { PureComponent, ReactNode } from 'react';
 import { inject, observer } from 'mobx-react';
 
-import { RowProps, Link } from 'components';
+import { RowProps, Link } from '@components';;
 
-import { Product } from 'entities';
-import { EntityStore } from 'stores';
-import { ProductColType } from 'types';
-import { routes } from 'routes';
-import { routeNames } from 'consts';
+import { Product } from '@entities';
+import { EntityStore } from '@stores';
+import { ProductColType } from '@typings';
+import { routes } from '@routes';
+import { routeNames } from '@constants';
 
 type ProductRowType = Record<ProductColType, ReactNode>;
 

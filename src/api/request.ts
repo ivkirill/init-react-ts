@@ -8,8 +8,8 @@ import {
   ModelId,
   APIResponse,
   APIResponseList,
-} from 'interfaces';
-import { API_HEADERS, API_SERVER } from 'consts';
+} from '@interfaces';
+import { API_HEADERS, API_SERVER } from '@constants';
 
 type RequestType = 'list';
 

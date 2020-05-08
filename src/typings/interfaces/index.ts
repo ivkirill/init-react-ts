@@ -1,4 +1,4 @@
-import { BaseStruct, BaseModel } from 'structs';
+import { BaseStruct, BaseModel } from '@structs';
 
 export type BaseStructClass = typeof BaseStruct;
 export type BaseModelClass = typeof BaseModel;
@@ -16,3 +16,4 @@ export type ModelId = string | number;
 export * from './api';
 export * from './propTypes';
 export * from './routes';
+export * from './table';

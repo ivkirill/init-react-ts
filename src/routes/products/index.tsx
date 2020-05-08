@@ -1,6 +1,6 @@
 // import React from 'react';
-// import { AsyncRoute, Loader } from 'components';
-import { ProductStore } from 'stores';
+// import { AsyncRoute, Loader } from '@components';;
+import { ProductStore } from '@stores';
 
 const ProductsPage = () => import(
   /* webpackPrefetch: true */

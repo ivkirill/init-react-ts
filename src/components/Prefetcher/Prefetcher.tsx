@@ -1,8 +1,8 @@
 import React, { Component, Dispatch, SetStateAction } from 'react';
 import { Route, Switch, withRouter, RouteComponentProps } from 'react-router-dom';
 import { Location } from 'history';
-import { AppRoute, AppRouteMapped } from 'routes';
-import { matchRoute, isEqualObjects } from 'utils';
+import { AppRoute, AppRouteMapped } from '@routes';
+import { matchRoute, isEqualObjects } from '@utils';
 
 interface Props extends RouteComponentProps {
   routesMap: AppRouteMapped[];

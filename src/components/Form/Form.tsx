@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react';
 import { useForm, FieldValues } from 'react-hook-form';
 import cn from 'classnames';
-import { Dictionary } from 'interfaces';
+import { Dictionary } from '@interfaces';
 
 import s from './Form.scss';
 
@@ -24,30 +24,31 @@ const Form = (props: Props) => {
   const { handleSubmit, register } = useForm({ defaultValues: initialValues });
 
   const classNameRoot = cn(s.root, className);
+
   const onFormSubmit = (values: Dictionary) => {
-    return onSubmit(values);
+      return onSubmit(values);
   };
 
-  let inputs = children;
+  const inputs = Children.map(children, (child: ReactElement<FieldProps>) => {
+    const name = child.props.name;
+    const value = initialValues[name];
 
-  if (Array.isArray(children)) {
-    inputs = children.map((child: ReactElement<FieldProps>) => {
-      return child.props.name
-        ? React.createElement(child.type, {
-            ...{
-              ...child.props,
-              register,
-              key: child.props.name,
-            },
-          })
-        : child;
-    });
-  }
+    return name
+      ? React.createElement(child.type, {
+          ...{
+            ...child.props,
+            register,
+            defaultValue: value,
+            key: child.props.name,
+          },
+        })
+      : child;
+  });
 
   return (
-    <form className={classNameRoot} onSubmit={handleSubmit(onFormSubmit)}>
-      {inputs}
-    </form>
+      <form className={classNameRoot} onSubmit={handleSubmit(onFormSubmit)}>
+          {inputs}
+      </form>
   );
 };
 

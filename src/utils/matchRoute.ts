@@ -1,7 +1,7 @@
 import { matchPath } from 'react-router-dom';
-import { routes, AppRoute, MatchProps, AppRouteMapped } from 'routes';
+import { routes, AppRoute, MatchProps, AppRouteMapped } from '@routes';
 import { Location } from 'history';
-import { routeNames } from 'consts';
+import { routeNames } from '@constants';
 
 export interface MatchRoute {
   match: MatchProps;

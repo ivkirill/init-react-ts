@@ -1,5 +1,5 @@
 import propTypes from 'prop-types';
-import { Dictionary, StructPropTypes } from 'interfaces';
+import { Dictionary, StructPropTypes } from '@interfaces';
 
 /* eslint-disable react/forbid-foreign-prop-types */
 export default class BaseStruct {

@@ -1,5 +1,5 @@
 import PropTypes, { ValidationMap } from 'prop-types';
-import { Dictionary } from 'interfaces';
+import { Dictionary } from '@interfaces';
 
 export type TypeOfPropType =
   typeof PropTypes.bool |

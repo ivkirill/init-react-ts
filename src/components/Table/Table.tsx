@@ -1,31 +1,11 @@
-import React, { PureComponent, ReactNode, ComponentType } from 'react';
+import React, { ReactNode, PureComponent } from 'react';
 import cn from 'classnames';
 
-import { ModelId } from 'interfaces';
+import { ModelId, TableHead, TableProps } from '@interfaces';
 
 import s from './Table.scss';
 
-export interface TableHead {
-  name: string;
-  value?: ReactNode;
-}
-
-export interface RowProps {
-  id: ModelId;
-  cols: string[];
-  className?: string;
-}
-
-export interface TableProps {
-  data: ModelId[];
-  headers: TableHead[];
-  cols: string[];
-  className?: string;
-  classNameRow?: string;
-  componentRow: ComponentType<RowProps>;
-}
-
-class Table extends PureComponent<TableProps> {
+class Table<T extends string> extends PureComponent<TableProps<T>> {
   renderHeadCell = (cell: TableHead, i: number) => {
     const { name, value } = cell;
     const key = `head-${i}`;
@@ -34,8 +14,10 @@ class Table extends PureComponent<TableProps> {
   }
 
   renderHead() {
-    const { headers = [], classNameRow } = this.props;
+    const { getHeader, cols, classNameRow } = this.props;
     const className = cn(s.header, classNameRow);
+
+    const headers: TableHead[] = cols.map(getHeader);
 
     return (
       <div className={className}>
@@ -44,14 +26,33 @@ class Table extends PureComponent<TableProps> {
     );
   }
 
+  renderRow(data: Record<T, ReactNode>, rowKey: string, rowClassName: string): ReactNode {
+    const { cols } = this.props;
+
+    return (
+        <div className={rowClassName} key={rowKey}>
+            {cols.map((name: T, i: number) => {
+                const cellKey = `row-cell-${i}`;
+
+                return (
+                    <span data-name={name} key={cellKey}>
+                        {data[name]}
+                    </span>
+                );
+            })}
+        </div>
+    );
+  };
+
   renderRows() {
-    const { data, cols, componentRow: ComponentRow, classNameRow } = this.props;
-    const className = cn(s.row, classNameRow);
+    const { ids, getRowData, classNameRow } = this.props;
+    const rowClassName = cn(s.row, classNameRow);
 
-    return data.map((id, i) => {
-      const key = `table-row-${i}`;
+    return ids.map((id: ModelId, i: number) => {
+        const rowKey = `table-row-${i}-${id}`;
+        const data = getRowData({ id });
 
-      return (<ComponentRow id={id} cols={cols} className={className} key={key} />);
+        return this.renderRow(data, rowKey, rowClassName);
     });
   }
 
@@ -68,5 +69,6 @@ class Table extends PureComponent<TableProps> {
     );
   }
 }
+
 
 export default Table;

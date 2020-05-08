@@ -1,6 +1,6 @@
 // import React from 'react';
-// import { AsyncRoute, Loader } from 'components';
-import { HomeStore } from 'stores';
+// import { AsyncRoute, Loader } from '@components';;
+import { HomeStore } from '@stores';
 
 const HomePage = () => import(
   /* webpackPrefetch: true */

@@ -1,4 +1,4 @@
-import { routeNames } from 'consts';
+import { routeNames } from '@constants';
 
 export const ROUTES_MAIN_MENU = [
   routeNames.home,

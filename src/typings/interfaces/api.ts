@@ -1,4 +1,4 @@
-import { Dictionary } from 'interfaces';
+import { Dictionary } from '@interfaces';
 
 export type APIRequestConfig = Partial<Request>;
 
