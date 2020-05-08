@@ -16,3 +16,4 @@ export type ModelId = string | number;
 export * from './api';
 export * from './propTypes';
 export * from './routes';
+export * from './table';

@@ -44,11 +44,11 @@ export default class EntityStore<T extends BaseModel> {
   /**
    * Store for named arrays of fetched item ids
    *
-   * @type {Dictionary<Array<ModelId>>}
+   * @type {Dictionary<ModelId[]>}
    * @memberof EntityStore
    */
 
-  @observable lists: Dictionary<Array<ModelId>> = {};
+  @observable lists: Dictionary<ModelId[]> = {};
 
   /**
    * Fetched records metas object.

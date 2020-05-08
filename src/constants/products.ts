@@ -1,5 +1,3 @@
-import { mapEnum } from '@utils';
-
 export enum PRODUCT_TABLE_COLS {
   id,
   name,
@@ -8,4 +6,10 @@ export enum PRODUCT_TABLE_COLS {
   updated,
 }
 
-export const PRODUCT_TABLE_COLS_MAP = mapEnum(PRODUCT_TABLE_COLS);
+export const PRODUCT_TABLE_COLS_MAP = [
+  'id',
+  'name',
+  'stock',
+  'created',
+  'updated',
+] as const;
